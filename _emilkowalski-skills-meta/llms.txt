@@ -1,0 +1,18 @@
+emil-design-eng: Emil Kowalski's philosophy on UI polish, component design, animation decisions, and the invisible details that make software feel great. Entry point for the collection.
+review-animations: Reviews animation and motion code against a high craft bar. Default to flagging; approval is earned.
+improve-animations: Read-only codebase audit of animation/motion, producing a prioritized roadmap of fixes rather than applying them.
+find-animation-opportunities: Read-only search for UI that doesn't animate but should (and rejects places that shouldn't), with exact proposed values.
+animation-vocabulary: Reverse-lookup glossary turning a vague description of a motion effect into its exact term.
+apple-design: Apple's interface-design and fluid/physical-motion principles translated for the web (gestures, springs, materials, typography, reduced motion).
+pick-ui-library: Curated, opinionated library picks per frontend task (toasts, OTP inputs, charts, DnD, virtualization, state, styling). Explicit-invoke only.
+prototype: Builds multiple genuinely different versions of a UI piece behind a live visual picker. Explicit-invoke only.
+
+Vier Skills bringen Begleitdateien mit, die die SKILL.md ausdrücklich lädt — ohne sie sind die
+Skills unvollständig:
+  improve-animations/AUDIT.md, improve-animations/PLAN-TEMPLATE.md,
+  prototype/PICKER.md, review-animations/STANDARDS.md
+
+Source: https://github.com/emilkowalski/skills (MIT license, see LICENSE in this folder).
+Vendored verbatim on 2026-07-30 at commit tip of main.
+Re-sync: das ganze Verzeichnis skills/<name>/ spiegeln, nicht nur SKILL.md — sonst fehlen die
+Begleitdateien oben. Gegenprobe: `git ls-files skills/` im Upstream gegen den lokalen Bestand.
