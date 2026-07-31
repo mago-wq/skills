@@ -12,8 +12,14 @@ deshalb auf oberster Ebene.
 | `emil-design-eng`, `review-animations`, `improve-animations`, `find-animation-opportunities`, `animation-vocabulary`, `apple-design`, `pick-ui-library`, `prototype` | [emilkowalski/skills](https://github.com/emilkowalski/skills) | MIT |
 | `impeccable` | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | Apache-2.0 |
 | `design-council` | eigene Arbeit | — |
+| `scrapling-official` | [D4Vinci/Scrapling](https://github.com/D4Vinci/Scrapling) | BSD-3-Clause |
 
 Lizenztexte liegen in den `_*-meta/`-Ordnern.
+
+`scrapling-official` ist der offizielle Web-Scraping-Skill von Scrapling und
+damit der einzige Nicht-Design-Skill hier — er hängt am selben Submodul-Mount,
+weil er ebenfalls nach `.claude/skills/` gehört. Er setzt eine installierte
+Bibliothek voraus, Details in `_scrapling-meta/NOTICE.md`.
 
 ## Einbinden in ein Projekt
 
