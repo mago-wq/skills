@@ -211,6 +211,37 @@ die Auflösung kippt mit dem Projekt und wird dort neu entschieden — nicht ein
 **Neuer Konflikt gefunden?** Nur eintragen, wenn er mit `datei:zeile` aus zwei Skills belegbar
 ist. Vermuteter Widerspruch ohne Fundstelle ist keiner.
 
+## Gedächtnis
+
+Stufe 3 funktioniert nur, wenn Stufe 4–6 auch wirklich wegschreibt. Genau das ist die
+Stelle, an der es in der Praxis reisst: In einem Projekt stand der letzte Eintrag vom
+2026-07-30, obwohl danach mehrere Arbeitssitzungen liefen, in denen sehr wohl entschieden
+wurde. Niemand hat eingetragen, weil nichts danach gefragt hat. Eine Regel, die nur in
+einer Datei steht, ist keine Automatik.
+
+**Zwei Ablagen, klar getrennt:**
+
+| Datei | Inhalt | Geltung |
+|---|---|---|
+| `design-council/ENTSCHEIDUNGEN.md` (dieses Repo) | Entscheidungen, die in jedem Projekt gelten | `universell` |
+| `ENTSCHEIDUNGEN.md` im Projekt (`design-projekt/` oder `.claude/skills/design-council/`) | alles Projektgebundene | `projektgebunden` |
+| `CLAUDE.md` im Projekt | Fehler mit Symptom/Ursache/Behebung, bewährte Muster | projektgebunden, Teile portierbar |
+
+Ein universeller Eintrag wird ins Skill-Repo **zurückportiert**, ein projektgebundener
+bleibt liegen — er kippt mit dem nächsten Profil.
+
+**Erzwungen wird das durch `scripts/wissen-hook.mjs`**, einen Stop-Hook. Er prüft beim
+Beenden: Wurde an relevanten Dateien gearbeitet, ohne dass eine Wissensdatei angefasst
+wurde? Dann blockt er **genau einmal** und nennt die geänderten Dateien. Er blockt nicht,
+wenn nichts geändert wurde, nicht, wenn schon eingetragen ist, und bei jedem eigenen
+Fehler lässt er still durch — ein Hook, der eine Sitzung wegen seiner selbst aufhält,
+wäre schlimmer als kein Hook.
+
+Einrichten: den `Stop`-Block aus `settings.hook.json` in die `.claude/settings.json` des
+Projekts übernehmen und den Skill nach `.claude/skills/design-council/` vendoren. Ohne
+diesen Eintrag läuft der Hook nicht — **eine mitgelieferte `settings.hook.json` ist eine
+Vorlage, keine aktive Einstellung.**
+
 ## Hook-Befunde
 
 Der impeccable-Hook meldet nach jedem UI-Edit Detector-Treffer. Das sind **Befunde, keine
