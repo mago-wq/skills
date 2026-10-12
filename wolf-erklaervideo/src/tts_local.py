@@ -4,6 +4,11 @@ ENGINE=omni (Standard): k2-fsa/OmniVoice, die Standard-Engine von VoiceStudio (g
   Muttersprachliches Deutsch. Der Erzähler wird von einer Referenz geklont (v2/voice_ref/narrator_omnivoice.wav + .txt,
   selbst per Voice-Design "male, middle-aged, low pitch" erzeugt), damit er in allen Abschnitten gleich klingt.
   Lizenz der Gewichte: CC-BY-NC (nicht kommerziell). Läuft in einer eigenen venv (transformers >= 5.10).
+ENGINE=voxcpm: VoxCPM2 (OpenBMB, ebenfalls in VoiceStudio), native 48 kHz, sauberer "Studio"-Klang, Lizenz Apache-2.0.
+  Der Erzähler spricht im Fortsetzungsmodus aus der gewählten Hörprobe weiter (v2/voice_ref/narrator_voxcpm.wav + .txt):
+  so bleibt es exakt diese Stimme, und "Wolf" wird mit offenem o gesprochen (der Referenz-Modus machte daraus "Wulf").
+  Das Modell wiederholt dabei anfangs kurz das Ende der Vorlage – das wird per Whisper erkannt und abgeschnitten.
+  Nebenstimmen per Voice-Design (Beschreibung in Klammern vor dem Text). Danach Studio-Mastering-Kette.
 ENGINE=qwen: Qwen3-TTS 1.7B CustomVoice, Sprecher "Ryan" (englischer Akzent).
 
 Das Modell spricht zusammenhängende Abschnitte (mehrere Skriptzeilen am Stück). Danach:
@@ -34,19 +39,30 @@ import align  # noqa: E402  (Whisper + Wortausrichtung)
 SR = 48000
 MAX_TAKES = int(os.environ.get("MAX_TAKES", "3"))
 ENGINE = os.environ.get("ENGINE", "omni")
-SPEED = float(os.environ.get("SPEED", "1.0" if ENGINE == "omni" else "1.08"))
+SPEED = float(os.environ.get("SPEED", "1.08" if ENGINE == "qwen" else "1.0"))
 MAX_WORDS = int(os.environ.get("MAX_WORDS", "40"))
 MAX_GAP = float(os.environ.get("MAX_GAP", "0.38"))
 GOOD = float(os.environ.get("GOOD", "0.72"))
+WOLF_SPELL = os.environ.get("WOLF_SPELL", "Wolf")  # Schreibweise nur für die Sprachausgabe (z. B. "Wolff" für ein offeneres o)
 IMPROVE_BELOW = float(os.environ.get("IMPROVE_BELOW", "0"))  # >0: vorhandene Abschnitte mit schwächerer Zeile nachbessern
 EXTRA = int(os.environ.get("EXTRA", "2"))
 TEMPO2 = float(os.environ.get("TEMPO2", "1.0"))  # nachträgliche Straffung vorhandener Abschnitte (nur mit REALIGN=1, einmalig)
 PAUSE_F = float(os.environ.get("PAUSE_F", "1.0"))
 LEVEL = float(os.environ.get("LEVEL", "-27.5"))  # Ziel-Lautheit je Abschnitt (LUFS) beim Zusammensetzen  # Faktor für die Pausen zwischen Abschnitten
-MODEL = os.environ.get("MODEL") or (os.path.join(ROOT, "models", "OmniVoice") if ENGINE == "omni"
-                                    else os.path.join(ROOT, "models", "qwen3tts", "Qwen3-TTS-12Hz-1.7B-CustomVoice"))
+MODEL = os.environ.get("MODEL") or os.path.join(ROOT, "models", {"omni": "OmniVoice", "voxcpm": "VoxCPM2"}.get(
+    ENGINE, os.path.join("qwen3tts", "Qwen3-TTS-12Hz-1.7B-CustomVoice")))
 OUT = os.path.join(ROOT, "audio", "chunks_" + ENGINE)
-NARRATOR_REF = os.environ.get("NARRATOR_REF", os.path.join(ROOT, "v2", "voice_ref", "narrator_omnivoice.wav"))
+NARRATOR_REF = os.environ.get("NARRATOR_REF", os.path.join(ROOT, "v2", "voice_ref", "narrator_%s.wav" % ("voxcpm" if ENGINE == "voxcpm" else "omnivoice")))
+# VoxCPM2-Voice-Design: freie Beschreibung, wird in Klammern vor den Text gesetzt
+DESC = {
+    "narrator": "Professionelle Studioaufnahme, nah am Mikrofon, klar und präsent. Deutscher Sprecher mittleren Alters, tiefe, kräftige Stimme, energischer und begeisterter YouTube-Erzähler, pointiert, dynamisch, mit trockenem Humor",
+    "muscle": "Studioaufnahme. Tiefe, laute, gehetzte Männerstimme eines panischen Bodybuilders, der aufgeregt in ein Funkgerät ruft, sehr energisch, klar verständlich",
+    "brain": "Studioaufnahme. Ruhige, trockene, kontrollierte Männerstimme eines Einsatzleiters am Funkgerät, knapp und sachlich, klar verständlich",
+    "ad": "Studioaufnahme. Übertrieben begeisterter, schneller Werbesprecher aus dem Teleshopping, laut, marktschreierisch, überdreht, klar verständlich",
+}
+# Studio-Mastering (angelehnt an VoiceStudios "Podcast"-Preset): Entrauschen, Mulm raus, Präsenz, Luft, De-Esser, Kompressor
+STUDIO = ("highpass=f=90,afftdn=nr=12:nf=-42,equalizer=f=250:t=q:w=1.0:g=-3,equalizer=f=3200:t=q:w=1.2:g=3,"
+          "highshelf=f=8000:g=2.5,deesser=i=0.35,acompressor=threshold=-20dB:ratio=3.5:attack=3:release=70:makeup=2")
 # OmniVoice-Voice-Design: nur festes Vokabular (Geschlecht, Alter, Tonhöhe, Akzent)
 DESIGN = {"narrator": "male, middle-aged, low pitch", "muscle": "male, young adult, low pitch",
           "brain": "male, middle-aged, moderate pitch", "ad": "male, young adult, high pitch"}
@@ -74,7 +90,13 @@ class Engine:
     def __init__(self):
         torch.set_num_threads(4)
         self.refs = {}  # Stimme -> (wav-Pfad, Transkript) für gleichbleibende Klangfarbe
-        if ENGINE == "omni":
+        if ENGINE == "voxcpm":
+            from voxcpm import VoxCPM
+            self.m = VoxCPM.from_pretrained(MODEL, load_denoiser=False, optimize=False, device="cpu")
+            txt = os.path.splitext(NARRATOR_REF)[0] + ".txt"
+            if os.path.exists(NARRATOR_REF) and os.path.exists(txt):
+                self.refs["narrator"] = (NARRATOR_REF, open(txt, encoding="utf-8").read().strip())
+        elif ENGINE == "omni":
             from omnivoice.models.omnivoice import OmniVoice
             self.m = OmniVoice.from_pretrained(MODEL, device_map="cpu", dtype=torch.float32)
             txt = os.path.splitext(NARRATOR_REF)[0] + ".txt"
@@ -85,6 +107,14 @@ class Engine:
             self.m = Qwen3TTSModel.from_pretrained(MODEL, device_map="cpu", dtype=torch.float32)
 
     def generate(self, text, voice):
+        if ENGINE == "voxcpm":
+            t = re.sub(r"\bWolf", WOLF_SPELL, text)
+            if voice in self.refs:  # Fortsetzungsmodus: spricht aus der Vorlage heraus weiter
+                wav, pt = self.refs[voice]
+                a = self.m.generate(text=t, prompt_wav_path=wav, prompt_text=pt, cfg_value=2.0, inference_timesteps=10)
+                return drop_prompt_echo(np.asarray(a, dtype=np.float32).reshape(-1), pt, text), 48000
+            a = self.m.generate(text="(" + DESC[voice] + ")" + t, cfg_value=2.0, inference_timesteps=10)
+            return np.asarray(a, dtype=np.float32).reshape(-1), 48000
         if ENGINE == "omni":
             if voice in self.refs:
                 wav, rt = self.refs[voice]
@@ -96,6 +126,24 @@ class Engine:
             return np.asarray(x, dtype=np.float32).reshape(-1), 24000
         wavs, sr = self.m.generate_custom_voice(text=text, language="German", speaker="Ryan", instruct=INSTRUCT[voice])
         return np.asarray(wavs[0] if isinstance(wavs, (list, tuple)) else wavs, dtype=np.float32).reshape(-1), sr
+
+
+def drop_prompt_echo(x, prompt_text, text, sr=48000):
+    """Schneidet am Anfang wiederholte Wörter vom Ende der Vorlage ab (Fortsetzungsmodus von VoxCPM2)."""
+    segs, _ = align.segments(x)
+    tail, tgt = align.words(prompt_text), align.words(text)
+    cut = 0
+    for a, b in segs[:2]:
+        w = align.words(align.hear(ROOT, x[int(a * sr): int(b * sr)]))
+        if not w:
+            continue
+        s_tail = difflib.SequenceMatcher(None, w, tail[-len(w):]).ratio()
+        s_tgt = difflib.SequenceMatcher(None, w, tgt[: len(w)]).ratio()
+        if s_tail >= 0.6 and s_tail > s_tgt:
+            cut = b
+        else:
+            break
+    return x[max(0, int((cut + 0.02) * sr)):] if cut else x
 
 
 def make_chunks(lines):
@@ -138,6 +186,8 @@ def process(raw, sr, chunk):
     """Rohaudio -> bereinigtes 48-kHz-Audio + Zeilen-Zeiten (relativ) + Bewertung."""
     voice = chunk[0].get("voice", "narrator")
     chain = FX[voice]
+    if ENGINE == "voxcpm":  # Studio-Kette statt der alten Kompressor-Kette; Funk-Effekt fürs Gehirn bleibt
+        chain = STUDIO + (",highpass=f=320,lowpass=f=3600,volume=1.3" if voice == "brain" else "")
     if SPEED != 1.0:
         chain = "rubberband=tempo=%.3f:pitchq=quality," % SPEED + chain
     return clean(ffmpeg(raw, sr, chain), chunk)
