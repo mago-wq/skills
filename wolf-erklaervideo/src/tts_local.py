@@ -43,7 +43,12 @@ SPEED = float(os.environ.get("SPEED", "1.08" if ENGINE == "qwen" else "1.0"))
 MAX_WORDS = int(os.environ.get("MAX_WORDS", "40"))
 MAX_GAP = float(os.environ.get("MAX_GAP", "0.38"))
 GOOD = float(os.environ.get("GOOD", "0.72"))
-WOLF_SPELL = os.environ.get("WOLF_SPELL", "Wolf")  # Schreibweise nur für die Sprachausgabe (z. B. "Wolff" für ein offeneres o)
+WOLF_SPELL = os.environ.get("WOLF_SPELL", "Wolf")
+# Nur bestimmte Abschnitte erzeugen (z. B. "8,13,18" oder "8-12"), etwa für parallele Helfer-Sitzungen; ohne Zusammensetzen
+ONLY = set()
+for _p in filter(None, os.environ.get("ONLY_CHUNKS", "").split(",")):
+    _a, _, _b = _p.partition("-")
+    ONLY |= set(range(int(_a), int(_b or _a) + 1))  # Schreibweise nur für die Sprachausgabe (z. B. "Wolff" für ein offeneres o)
 IMPROVE_BELOW = float(os.environ.get("IMPROVE_BELOW", "0"))  # >0: vorhandene Abschnitte mit schwächerer Zeile nachbessern
 EXTRA = int(os.environ.get("EXTRA", "2"))
 TEMPO2 = float(os.environ.get("TEMPO2", "1.0"))  # nachträgliche Straffung vorhandener Abschnitte (nur mit REALIGN=1, einmalig)
@@ -268,6 +273,8 @@ def main():
     print("Abschnitte:", len(chunks), [len(c) for c in chunks], flush=True)
     model = None
     for ci, chunk in enumerate(chunks):
+        if ONLY and ci not in ONLY:
+            continue
         cid = "%02d_%s" % (ci, chunk[0]["id"])
         jp = os.path.join(OUT, cid + ".json")
         best, takes = None, MAX_TAKES
@@ -304,7 +311,8 @@ def main():
             info["improved"] = True
         write_wav(os.path.join(OUT, cid + ".wav"), audio)
         json.dump(info, open(jp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    assemble(lines, chunks)
+    if not ONLY:
+        assemble(lines, chunks)
 
 
 def loudness(path):
