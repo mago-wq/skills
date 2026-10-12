@@ -1,0 +1,38 @@
+{
+ "lines": [
+  {
+   "id": "e1",
+   "start": 0.03,
+   "end": 2.48,
+   "parts": [
+    0.0
+   ],
+   "heard": "drittens wolf ist echtes essen",
+   "sim": 0.98
+  },
+  {
+   "id": "e2",
+   "start": 2.82,
+   "end": 5.92,
+   "parts": [
+    0.0
+   ],
+   "heard": "kurze frage voraus wird testosteron gebaut",
+   "sim": 0.97
+  },
+  {
+   "id": "e3",
+   "start": 6.3,
+   "end": 7.26,
+   "parts": [
+    0.0
+   ],
+   "heard": "aus cholesterin",
+   "sim": 1.0
+  }
+ ],
+ "score": 0.985,
+ "removed": [],
+ "dur": 7.26,
+ "take": 1
+}

@@ -1,0 +1,49 @@
+{
+ "lines": [
+  {
+   "id": "e7",
+   "start": 0.03,
+   "end": 2.33,
+   "parts": [
+    0.0
+   ],
+   "heard": "eier und rotes fleisch in maßen",
+   "sim": 1.0
+  },
+  {
+   "id": "e8",
+   "start": 2.52,
+   "end": 4.22,
+   "parts": [
+    0.0,
+    1.01
+   ],
+   "heard": "avocado olivenöl",
+   "sim": 1.0
+  },
+  {
+   "id": "e9",
+   "start": 4.57,
+   "end": 5.96,
+   "parts": [
+    0.0
+   ],
+   "heard": "und fetten fisch wie lachs",
+   "sim": 1.0
+  },
+  {
+   "id": "e10",
+   "start": 6.34,
+   "end": 7.84,
+   "parts": [
+    0.0
+   ],
+   "heard": "dazu genug eiweiß",
+   "sim": 1.0
+  }
+ ],
+ "score": 1.0,
+ "removed": [],
+ "dur": 7.84,
+ "take": 1
+}
