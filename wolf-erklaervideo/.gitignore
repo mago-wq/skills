@@ -1,0 +1,10 @@
+# Große oder erzeugte Dateien – werden von setup.sh / make_video.sh neu erstellt
+models/
+fonts/
+audio/
+render/
+src/node_modules/
+src/package-lock.json
+src/timeline.js
+src/_*.html
+__pycache__/

@@ -1,0 +1,440 @@
+{
+ "title": "Testosteron natürlich steigern – dauerhaft & ohne Pillen",
+ "voices": {
+  "narrator": {
+   "model": "high",
+   "sid": 0,
+   "speed": 1.08,
+   "pitch": 0
+  },
+  "ad": {
+   "model": "emotional",
+   "sid": 0,
+   "speed": 1.12,
+   "pitch": 1.5
+  },
+  "muscle": {
+   "model": "emotional",
+   "sid": 6,
+   "speed": 1.0,
+   "pitch": -3.5
+  },
+  "brain": {
+   "model": "emotional",
+   "sid": 4,
+   "speed": 0.95,
+   "pitch": 1.5,
+   "radio": true
+  }
+ },
+ "lines": [
+  {
+   "id": "i1",
+   "text": "Wolf wacht auf.",
+   "pause": 0.44,
+   "lead": 1.2
+  },
+  {
+   "id": "i2",
+   "text": "Irgendwas stimmt nicht.",
+   "pause": 0.32
+  },
+  {
+   "id": "i3",
+   "text": "Kein Feuer. Kein Antrieb. Einfach nur … platt.",
+   "tts": "Kein Feuer. Kein Antrieb. Einfach nur platt.",
+   "pause": 0.48
+  },
+  {
+   "id": "i4",
+   "text": "Wolf schaut in den Spiegel.",
+   "pause": 0.28
+  },
+  {
+   "id": "i5",
+   "text": "Gleicher Wolf. Aber er läuft auf leerem Akku.",
+   "pause": 0.44
+  },
+  {
+   "id": "i6",
+   "text": "Das ist niedriges Testosteron.",
+   "pause": 0.28
+  },
+  {
+   "id": "i7",
+   "text": "Keine seltene Krankheit. Sondern oft einfach Jahre voller schlechter Gewohnheiten, die sich leise bemerkbar machen.",
+   "pause": 0.48
+  },
+  {
+   "id": "i8",
+   "text": "Dann vibriert Wolfs Handy. Werbung.",
+   "tts": "Dann vibriert Wolfs Händy. Werbung.",
+   "pause": 0.24
+  },
+  {
+   "id": "i9",
+   "text": "„Kauf jetzt Testo-Gummibärchen! Über Nacht zum Alphawolf!“",
+   "tts": "Kauf jetzt Testo-Gummibärchen! Über Nacht zum Alphawolf!",
+   "voice": "ad",
+   "pause": 0.36
+  },
+  {
+   "id": "i10",
+   "text": "Wolf lacht nur. Und wischt die Werbung weg.",
+   "pause": 0.4
+  },
+  {
+   "id": "i11",
+   "text": "Man kauft Testosteron nicht.",
+   "pause": 0.16
+  },
+  {
+   "id": "i12",
+   "text": "Man baut es auf.",
+   "pause": 0.32
+  },
+  {
+   "id": "i13",
+   "text": "Und zwar genau so.",
+   "pause": 0.64
+  },
+  {
+   "id": "s1",
+   "text": "Erstens: Schlaf.",
+   "pause": 0.44
+  },
+  {
+   "id": "s2",
+   "text": "Einen Großteil seines Testosterons bildet Wolf im Schlaf. Nicht, während er wach ist.",
+   "pause": 0.36
+  },
+  {
+   "id": "s3",
+   "text": "Nur fünf zerstückelte Stunden pro Nacht, und schon nach einer Woche kann das Testosteron spürbar sinken.",
+   "pause": 0.24
+  },
+  {
+   "id": "s4",
+   "text": "Ohne dass Wolf überhaupt weiß, warum er sich so schlapp fühlt.",
+   "pause": 0.44
+  },
+  {
+   "id": "s5",
+   "text": "Also plant Wolf sieben bis neun Stunden Schlaf ein.",
+   "pause": 0.36
+  },
+  {
+   "id": "s6",
+   "text": "Koffein gibt es nur bis etwa fünfzehn Uhr. Denn es wirkt noch viele Stunden nach.",
+   "pause": 0.4
+  },
+  {
+   "id": "s7",
+   "text": "Dunkles Zimmer.",
+   "pause": 0.2
+  },
+  {
+   "id": "s8",
+   "text": "Gleiche Schlafenszeit. Gleiche Aufstehzeit.",
+   "pause": 0.24
+  },
+  {
+   "id": "s9",
+   "text": "Und kein Scrollen auf dem leuchtenden Rechteck bis zwei Uhr nachts. Das allein ruiniert den ganzen Plan.",
+   "tts": "Und kein Skrollen auf dem leuchtenden Rechteck bis zwei Uhr nachts. Das allein ruiniert den ganzen Plan.",
+   "pause": 0.44
+  },
+  {
+   "id": "s10",
+   "text": "Und wenn Wolf aufwacht, holt er sich zuerst Tageslicht.",
+   "pause": 0.24
+  },
+  {
+   "id": "s11",
+   "text": "Das stellt seine innere Uhr. Und Sonnenlicht hilft beim Vitamin D, das auch fürs Testosteron wichtig ist.",
+   "pause": 0.68
+  },
+  {
+   "id": "t1",
+   "text": "Zweitens: Schwer trainieren. Und schlank werden.",
+   "pause": 0.44
+  },
+  {
+   "id": "t2",
+   "text": "Wenn Wolf schwere Kniebeugen macht, Kreuzheben, Drücken, dann geraten die großen Muskeln kurz in Panik.",
+   "pause": 0.24
+  },
+  {
+   "id": "t3",
+   "text": "Und diese Panik schickt eine Nachricht nach oben, ans Gehirn.",
+   "pause": 0.36
+  },
+  {
+   "id": "t4",
+   "text": "„Hey, Zentrale! Das war richtig viel Gewicht! Fürs nächste Mal brauchen wir mehr Kraft!“",
+   "tts": "Hey, Zentrale! Das war richtig viel Gewicht! Fürs nächste Mal brauchen wir mehr Kraft!",
+   "voice": "muscle",
+   "pause": 0.28
+  },
+  {
+   "id": "t5",
+   "text": "„Verstanden. Befehl geht raus.“",
+   "tts": "Verstanden. Befehl geht raus.",
+   "voice": "brain",
+   "pause": 0.24
+  },
+  {
+   "id": "t6",
+   "text": "„Wie viel mehr?“",
+   "tts": "Wie viel mehr?",
+   "voice": "muscle",
+   "pause": 0.24
+  },
+  {
+   "id": "t7",
+   "text": "„Alles.“",
+   "tts": "Alles.",
+   "voice": "brain",
+   "pause": 0.56
+  },
+  {
+   "id": "t8",
+   "text": "Okay, etwas vereinfacht. Aber schwere Grundübungen lassen das Testosteron kurzfristig steigen. Und vor allem bauen sie Muskeln auf, die den Hormonhaushalt langfristig stützen.",
+   "pause": 0.36
+  },
+  {
+   "id": "t9",
+   "text": "Darum trainiert Wolf Kniebeugen, Kreuzheben, Klimmzüge, Drücken und Langhantel-Rudern.",
+   "pause": 0.24
+  },
+  {
+   "id": "t10",
+   "text": "Nicht stundenlang Bizeps vor dem Spiegel.",
+   "pause": 0.56
+  },
+  {
+   "id": "f1",
+   "text": "Dann ist da noch das Körperfett.",
+   "pause": 0.24
+  },
+  {
+   "id": "f2",
+   "text": "Fett ist nicht einfach nur gespeicherte Energie. Fett ist aktiv.",
+   "pause": 0.32
+  },
+  {
+   "id": "f3",
+   "text": "Es bildet ein Enzym namens Aromatase. Und Aromatase wandelt Testosteron in Östrogen um.",
+   "pause": 0.36
+  },
+  {
+   "id": "f4",
+   "text": "Je mehr Fett Wolf mit sich trägt, desto mehr Aromatase entsteht, und desto mehr Testosteron wird umgewandelt.",
+   "pause": 0.32
+  },
+  {
+   "id": "f5",
+   "text": "Mehr Fett. Mehr Östrogen. Weniger Testosteron. Noch mehr Fett.",
+   "pause": 0.24
+  },
+  {
+   "id": "f6",
+   "text": "Ein Kreislauf, der sich selbst füttert.",
+   "pause": 0.44
+  },
+  {
+   "id": "f7",
+   "text": "Also, was macht Wolf?",
+   "pause": 0.28
+  },
+  {
+   "id": "f8",
+   "text": "Er hält seinen Körperfettanteil in einem schlanken, gesunden Bereich. Ungefähr zwölf bis fünfzehn Prozent.",
+   "pause": 0.32
+  },
+  {
+   "id": "f9",
+   "text": "Unter acht Prozent wird es zu extrem. Die Hormone sacken ab, Wolf ist ständig müde.",
+   "pause": 0.32
+  },
+  {
+   "id": "f10",
+   "text": "Und über zwanzig Prozent? Dann geht Wolf in ein leichtes Kaloriendefizit, dreihundert bis fünfhundert Kalorien pro Tag, bis sein Körperfett wieder sinkt.",
+   "pause": 0.68
+  },
+  {
+   "id": "e1",
+   "text": "Drittens: Wolf isst echtes Essen.",
+   "pause": 0.36
+  },
+  {
+   "id": "e2",
+   "text": "Testosteron wird aus Cholesterin gebaut.",
+   "pause": 0.24
+  },
+  {
+   "id": "e3",
+   "text": "Deshalb isst Wolf genug gesunde Fette:",
+   "pause": 0.24
+  },
+  {
+   "id": "e4",
+   "text": "Eier.",
+   "pause": 0.12
+  },
+  {
+   "id": "e5",
+   "text": "Rotes Fleisch, natürlich halal.",
+   "pause": 0.12,
+   "tts": "Rotes Fleisch. Natürlich halal."
+  },
+  {
+   "id": "e6",
+   "text": "Avocado.",
+   "pause": 0.12
+  },
+  {
+   "id": "e7",
+   "text": "Olivenöl.",
+   "pause": 0.12
+  },
+  {
+   "id": "e8",
+   "text": "Und fetten Fisch, wie Lachs oder Thunfisch.",
+   "pause": 0.28
+  },
+  {
+   "id": "e9",
+   "text": "Das ist das Rohmaterial, aus dem Testosteron tatsächlich entsteht.",
+   "pause": 0.68
+  },
+  {
+   "id": "c1",
+   "text": "Viertens: Wolf kontrolliert seinen Stress.",
+   "pause": 0.36
+  },
+  {
+   "id": "c2",
+   "text": "Cortisol ist an sich nicht schlecht. Es hilft Wolf, Stress zu überstehen, und hält seinen Blutzucker stabil.",
+   "tts": "Kortisol ist an sich nicht schlecht. Es hilft Wolf, Stress zu überstehen, und hält seinen Blutzucker stabil.",
+   "pause": 0.32
+  },
+  {
+   "id": "c3",
+   "text": "Aber wenn das Cortisol dauerhaft hoch bleibt, durch schlechten Schlaf, Übertraining oder Scrollen um zwei Uhr nachts, wird es zum Feind des Testosterons.",
+   "tts": "Aber wenn das Kortisol dauerhaft hoch bleibt, durch schlechten Schlaf, Übertraining oder Skrollen um zwei Uhr nachts, wird es zum Feind des Testosterons.",
+   "pause": 0.32
+  },
+  {
+   "id": "c4",
+   "text": "Dauerhaft hohes Cortisol treibt den Blutzucker hoch, fördert Bauchfett und drückt das Testosteron noch weiter nach unten.",
+   "tts": "Dauerhaft hohes Kortisol treibt den Blutzucker hoch, fördert Bauchfett und drückt das Testosteron noch weiter nach unten.",
+   "pause": 0.36
+  },
+  {
+   "id": "c5",
+   "text": "Also schützt Wolf seinen Schlaf und hält den Stress niedrig. Und Alkohol? Lässt er sowieso komplett weg.",
+   "pause": 0.36
+  },
+  {
+   "id": "c6",
+   "text": "Cortisol sinkt. Testosteron steigt.",
+   "tts": "Kortisol sinkt. Testosteron steigt.",
+   "pause": 0.72
+  },
+  {
+   "id": "r1",
+   "text": "Hier ist also der komplette Plan fürs Rudel.",
+   "pause": 0.36
+  },
+  {
+   "id": "r2",
+   "text": "Sieben bis neun Stunden Schlaf.",
+   "pause": 0.16
+  },
+  {
+   "id": "r3",
+   "text": "Schwere Grundübungen.",
+   "pause": 0.16
+  },
+  {
+   "id": "r4",
+   "text": "Zwölf bis fünfzehn Prozent Körperfett.",
+   "pause": 0.16
+  },
+  {
+   "id": "r5",
+   "text": "Echte Fette und echtes Protein.",
+   "pause": 0.16
+  },
+  {
+   "id": "r6",
+   "text": "Kein Alkohol. Weniger Stress. Kein Scrollen um zwei Uhr nachts.",
+   "tts": "Kein Alkohol. Weniger Stress. Kein Skrollen um zwei Uhr nachts.",
+   "pause": 0.48
+  },
+  {
+   "id": "r7",
+   "text": "Kein Gummibärchen hat das geschafft.",
+   "pause": 0.12
+  },
+  {
+   "id": "r8",
+   "text": "Kein Pulver hat das geschafft.",
+   "pause": 0.12
+  },
+  {
+   "id": "r9",
+   "text": "Wolf hat das geschafft.",
+   "pause": 0.64
+  },
+  {
+   "id": "r10",
+   "text": "Wochen vergehen.",
+   "pause": 0.36
+  },
+  {
+   "id": "r11",
+   "text": "Wolf wacht wieder auf. Schaut in den Spiegel.",
+   "pause": 0.28
+  },
+  {
+   "id": "r12",
+   "text": "Gleicher Wolf. Nur diesmal ist der Akku voll.",
+   "pause": 0.24
+  },
+  {
+   "id": "r13",
+   "text": "Das Feuer ist zurück.",
+   "pause": 0.28
+  },
+  {
+   "id": "r14",
+   "text": "Und Wolf hat endlich wieder einen Grund, sich selbst anzulächeln.",
+   "pause": 0.44
+  },
+  {
+   "id": "r15",
+   "text": "Das ist kein Glück. Das ist einfach Wolf, der sein Hormon trainiert, statt nur zu raten.",
+   "pause": 0.96,
+   "tail": 5.0
+  }
+ ],
+ "phonemes": {
+  "Koffein": "kɔfeːˈiːn",
+  "Cholesterin": "koːlɛsteːrˈiːn",
+  "Hormonhaushalt": "hɔɾmˈoːnhaʊshalt",
+  "Körperfett": "kˈœɾpɜfɛt",
+  "Bauchfett": "bˈaʊxfɛt",
+  "Kaloriendefizit": "kaloːrˈiːəndeːfiːtsɪt",
+  "Kalorien": "kaloːrˈiːən",
+  "Alkohol": "ˈalkoːhoːl",
+  "Thunfisch": "tˈuːnfɪʃ",
+  "Übertraining": "ˈyːbɜtrɛːnɪŋ",
+  "Rohmaterial": "rˈoːmɑteːriːˌɑːl",
+  "sowieso": "zoːviːzˈoː",
+  "Blutzucker": "blˈuːtsʊkɜ",
+  "Schlafenszeit": "ʃlˈɑːfənstsaɪt",
+  "Pulver": "pˈʊlfɜ"
+ }
+}

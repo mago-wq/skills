@@ -13,6 +13,7 @@ deshalb auf oberster Ebene.
 | `impeccable` | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | Apache-2.0 |
 | `design-council` | eigene Arbeit | — |
 | `scrapling-official` | [D4Vinci/Scrapling](https://github.com/D4Vinci/Scrapling) | BSD-3-Clause |
+| `wolf-erklaervideo` | eigene Arbeit | — |
 
 Lizenztexte liegen in den `_*-meta/`-Ordnern.
 
@@ -20,6 +21,10 @@ Lizenztexte liegen in den `_*-meta/`-Ordnern.
 damit der einzige Nicht-Design-Skill hier — er hängt am selben Submodul-Mount,
 weil er ebenfalls nach `.claude/skills/` gehört. Er setzt eine installierte
 Bibliothek voraus, Details in `_scrapling-meta/NOTICE.md`.
+
+`wolf-erklaervideo` baut animierte Erklärvideos mit einem augenlosen Cartoon-Wolf
+(halal-tauglich, ohne Musik). Stimmenmodelle, Schriften und Renderausgaben liegen
+nicht im Repo – `wolf-erklaervideo/setup.sh` lädt sie nach.
 
 ## Einbinden in ein Projekt
 
