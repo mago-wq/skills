@@ -1,51 +1,83 @@
 ---
 name: wolf-erklaervideo
-description: Animiertes Erklärvideo mit dem augenlosen Cartoon-Wolf (halal-tauglich: keine Augen, keine Musik) im Stil von „Gorilla Bum“ – deutsches Voiceover lokal per Piper (Thorsten), flache SVG-Szenen, Rendering per Chromium, Ton auf -14 LUFS. Verwenden, wenn ein neues Wolf-Video gebaut, ein Thema/Skript getauscht oder das vorhandene Testosteron-Video geändert werden soll.
+description: Deutsches Erklärvideo mit einem Wolf im Stil von „Gorilla Bum“ (Tier erzählt in der dritten Person ein Gesundheitsthema), halal-tauglich (keine Musik, stark vereinfachte Augen). v2 (Standard) baut das Video aus halbrealistischen KI-Standbildern mit Ken-Burns-Bewegung, animierten Einblendungen und Infografiken; das Voiceover spricht lokal Qwen3-TTS (Sprecher Ryan). v1 ist die rein animierte SVG-Variante mit augenlosem Cartoon-Wolf und Piper-Stimme. Verwenden, wenn ein neues Wolf-Video gebaut, ein Thema/Skript getauscht oder das vorhandene Testosteron-Video geändert werden soll.
 ---
 
 # Wolf-Erklärvideo
 
-Vorlage: „How To Increase Testosterone Naturally & Permanently“ (Kanal *Gorilla Bum*) – ein Tier erzählt
+Vorlage: „How To Increase Testosterone Naturally & Permanently“ (Kanal *Gorilla Bum*). Ein Tier erzählt
 in der dritten Person („Wolf wacht auf …“) ein Gesundheitsthema in kurzen, trockenen Sätzen. Hier ist das
-Tier ein Wolf im orangen Tanktop, durchgehend **ohne Augen**.
+Tier ein muskulöser grauer Wolf im orangen Tanktop mit dunkelblauen Shorts.
 
 ## Harte Regeln (halal)
 
-- **Keine Augen** – nirgends: nicht am Wolf, nicht im Spiegelbild, nicht an Icons. Keine Emoji mit Gesicht,
-  keine Fische mit Auge (Lachs als Filet, Thunfisch als Dose), kein Punkt im „Pac-Man“-Enzym, keine
-  Glanzpunkte, die wie Pupillen wirken (Avocado-Kern, Fettzelle), Funkeln nie auf Kopfhöhe.
-  Ausdruck kommt über Ohren (`ear`), Maul (`smile`, `open`), Kopfneigung, Haltung, Schwanz und Symbole.
-- **Keine Musik**, keine Glocken/Ding-Töne. Nur dezente, synthetische Effekte (`src/sfx_mix.py`).
-- Keine Alkohol- oder Anzüglichkeits-Gags; Fleisch wird als halal gekennzeichnet.
-- Gesundheitsaussagen vorsichtig formulieren, Vereinfachungen benennen, am Ende Hinweis „keine ärztliche Beratung“.
+- **Augen stark vereinfacht.** v2: Die Augen sind rein weiße Flächen ohne Pupille, Iris oder dunklen Punkt,
+  oder geschlossen. Das gilt auch im Spiegelbild. Nur wenn der Wolf „seine Instinkte weckt“ (Teaser), darf in jedem Auge
+  ein einzelner roter Punkt sitzen. v1: gar keine Augen. Icons und Requisiten haben nie Gesichter und keine Punkte,
+  die wie Pupillen wirken. Funkeln und Emotes sitzen nie auf einem Gesicht.
+- **Keine Musik**, keine Glocken oder Ding-Töne. Nur dezente, synthetische Effekte (`src/sfx_mix.py`).
+- Keine Alkohol- oder Anzüglichkeits-Gags. Fleisch wird als halal gekennzeichnet. Shorts reichen bis zum Knie.
+  Im Bild ist nur der Wolf zu sehen, keine anderen Figuren.
+- Gesundheitsaussagen vorsichtig formulieren, Vereinfachungen benennen. Am Ende steht der Hinweis „keine ärztliche Beratung“.
 
-## Aufbau
+## v2 – Standbilder + Qwen3-Stimme (Standard)
 
 | Datei | Zweck |
 |---|---|
-| `src/script_de.json` | Sprechertext: Zeilen mit `id`, `text` (Anzeige), optional `tts` (Aussprache), `voice`, `pause`; Stimmen; IPA-Korrekturen unter `phonemes` |
-| `src/tts.py` | Voiceover: je Satz mehrere Takes, Whisper hört zurück, verständlichster gewinnt → `audio/voiceover.wav` + `src/timeline.js` (mit Satz-Startzeiten `parts`) |
-| `src/wolf.js` | Wolf-Rig (Profil, 2-Knochen-IK für Arme/Beine), Posen (`POSES`, `exPose()` für Übungen), Emotes |
-| `src/props.js` | Hintergründe, Requisiten, Icons, Kapitelkarten, Titel-Helfer |
-| `src/scenes.js` | Alle Szenen; Zeiten hängen an Cues: `S(id)`/`EN(id)` Zeilenstart/-ende, `PT(id,k)` k-ter Satz, `WT(id,"Wort")` geschätzte Wortzeit; `sfx(t, art)` setzt Effekte |
-| `src/engine.js` | Easing, Keyframes (`kf`), `pop()`, Wischer, `renderFrame(t)` |
-| `src/render.js` | Frame-Bereich per Chromium-Screenshot direkt in ffmpeg |
-| `src/preview.js` | Einzelbilder: `node preview.js scenes.js ../render/p 12.5 40` |
-
-## Ablauf
+| `v2/script_v2.json` | Sprechertext: Zeilen mit `id`, `text`, `voice` (`narrator`, `muscle`, `brain`, `ad`), `pause` |
+| `v2/image_prompts.json` | Die tatsächlich verwendeten Bild-Prompts je Shot (Figur-Block + Szene + Schlussblock) |
+| `v2/img/final/S*.jpg` | Die geprüften Standbilder (1920×1080). S31 ist der Teaser mit roten Instinkt-Augen |
+| `src/tts_qwen.py` | Voiceover: spricht **Abschnitte** aus mehreren Zeilen am Stück. Einzelzeilen erzeugen Seufzer und Kichern. Whisper hört jeden Sprechabschnitt, Nicht-Sprache („\*seufzt\*“) wird herausgeschnitten, Pausen werden gekürzt, und die Wortausrichtung (`align.py`) liefert Start, Ende und Satzanfänge (`parts`) jeder Zeile. Schwache Abschnitte werden neu erzeugt, der beste Take gewinnt. Ergebnis: `audio/chunks_v2/`, `audio/voiceover_v2.wav`, `src/timeline_v2.js` |
+| `src/align.py` | Whisper (sherpa-onnx) + Needleman-Wunsch-Wortausrichtung, Normalisierung von Zahlen („10-15%“ → „zehn bis fünfzehn prozent“) |
+| `src/scenes_v2.js` | Alle Szenen. `shot()` blendet über die vorige Szene, `photo()` zeigt ein Standbild mit Ken-Burns (`KB`-Tabelle), `kbXY()` rechnet Bildpunkte auf den Bildschirm um (für Zeiger auf Dinge im Bild). Dazu `chapterBanner()`, `tag()`, `checklist()`, `gfxBg()` (weichgezeichnetes Standbild als Grafik-Hintergrund) und `photoCard()` |
+| `src/blur_bg.py` | Erzeugt `v2/img/final/blur/` für die Grafik-Hintergründe |
+| `src/qa_frames.js` + `src/contact.py` | Prüfbilder je Szene und Kontaktbögen (Augen- und Layout-Check) |
 
 ```bash
-./setup.sh                      # einmalig: Pakete, Stimmen (~200 MB), Whisper, Schriften
-./make_video.sh                 # Skript -> render/wolf-video.mp4 (ca. 4 min Renderzeit bei 4 Kernen)
-SKIP_TTS=1 ./make_video.sh      # nur neu rendern, Voiceover behalten
+./setup.sh                          # einmalig, inkl. Qwen3-TTS (~4,3 GB) – V2=0 lässt das weg
+./make_video_v2.sh                  # Voiceover (CPU, ca. 1 h) -> Rendering -> render/wolf-video-v2.mp4
+SKIP_TTS=1 ./make_video_v2.sh       # nur neu rendern, Voiceover behalten (~10 min bei 4 Kernen)
+TL_FILE=timeline_v2.js node src/qa_frames.js scenes_v2.js v2/qa 0.3,0.65,0.95 && python3 src/contact.py v2/qa v2/qa/sheet 15
 ```
 
-Neues Thema: `src/script_de.json` neu schreiben (IDs frei wählbar), Szenen in `src/scenes.js` auf die neuen
-IDs umstellen, mit `preview.js` Stichproben-Frames prüfen (Augen-Check!), dann rendern.
+Nachbessern am Voiceover, ohne alles neu zu sprechen:
 
-## Aussprache
+- `IMPROVE_BELOW=0.72 EXTRA=2 python3 src/tts_qwen.py . v2/script_v2.json` erzeugt für Abschnitte mit einer Zeile unter
+  0,72 zwei weitere Takes. Der beste Take bleibt.
+- `REALIGN=1 TEMPO2=1.14 MAX_GAP=0.3 PAUSE_F=0.85 python3 src/tts_qwen.py . v2/script_v2.json` richtet die Zeilen neu aus.
+  Dabei wird alles einmalig um 14 % gestrafft, und die Pausen werden gekürzt. Die Abschnitte werden beim Zusammensetzen
+  auf gleiche Lautheit gebracht.
 
-Piper/espeak betont manche Fremdwörter falsch. Korrekturen stehen als IPA in `phonemes`
-(z. B. `Koffein`, `Cholesterin`, `Körperfett`). Vorher prüfen: `python3 src/asr_check.py . src/script_de.json`
-listet Zeilen, die Whisper anders zurückhört. Zahlen im TTS-Text ausschreiben („sieben bis neun“),
-Satzanfänge mit „Testosteron“ meiden (klingt abgehackt) – lieber „Man kauft Testosteron nicht.“
+Hinweise:
+
+- Der Sprecher „Ryan“ hat einen leichten englischen Akzent. Whisper hört „Wolf“ deshalb oft als „Ruf“ oder „Wurf“.
+  Das ist kein Grund für endlose Neu-Takes.
+- Neue Bilder erzeugt man mit Figma `generate_image` (Modell `gpt-image-2.5-sunburst`, 1536×864, auf 1920×1080 skalieren).
+  Den Figur-Block aus `image_prompts.json` übernimmt man wörtlich. Danach wird jedes Bild geprüft: Augen 3–10-fach
+  vergrößern, es darf kein dunkler Punkt zu sehen sein. Außerdem prüfen: genau eine Figur, Anatomie, Requisiten
+  (Kniebeuge: Stange auf dem oberen Rücken; Kreuzheben: Stange vor den Oberschenkeln).
+- In jedem Bild bleibt eine Seite für Einblendungen frei („… kept free for text overlays“).
+
+## v1 – reine SVG-Animation (augenloser Cartoon-Wolf)
+
+| Datei | Zweck |
+|---|---|
+| `src/script_de.json` | Sprechertext mit optionalem `tts` (Aussprache) und IPA-Korrekturen unter `phonemes` |
+| `src/tts.py` | Piper (Thorsten): je Satz mehrere Takes, Whisper wählt den verständlichsten → `audio/voiceover.wav`, `src/timeline.js` |
+| `src/wolf.js` | Wolf-Rig (2-Knochen-IK), Posen, `exPose()` für Übungen, Emotes |
+| `src/scenes.js` | Alle v1-Szenen |
+
+```bash
+./make_video.sh                 # Skript -> render/wolf-video.mp4
+SKIP_TTS=1 ./make_video.sh      # nur neu rendern
+```
+
+## Gemeinsame Bausteine
+
+- `src/engine.js`: Easing, Keyframes (`kf`), `P()` (vor dem Start exakt 0, nach dem Ende exakt 1), `pop()`, Wischer,
+  `renderFrame(t)`, `still()` und `preloadImages()`.
+- `src/props.js`: Icons, Requisiten, Kapitelkarten, Titel-Helfer, Verlaufs-Schatten (`gShadeL/R/T/B`) für Text über Fotos.
+- Zeiten hängen immer an Voiceover-Cues: `S(id)` und `EN(id)` für Zeilenstart und -ende, `PT(id,k)` für den k-ten Satz,
+  `WT(id,"Wort")` für die geschätzte Zeit eines Wortes. `sfx(t, art)` setzt Effekte.
+- `src/render.js` rendert per Chromium-Screenshot direkt in ffmpeg. Die Timeline wählt man über `TL_FILE`.
+  `src/preview.js` erzeugt Einzelbilder.

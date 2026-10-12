@@ -23,6 +23,10 @@ window.DEFS = `
   <radialGradient id="gGlowW" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.6"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
   <radialGradient id="gSun" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFF6C9"/><stop offset="0.6" stop-color="#FFD25A"/><stop offset="1" stop-color="#FFB347"/></radialGradient>
   <radialGradient id="gVignette" cx="0.5" cy="0.5" r="0.75"><stop offset="0.6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.45"/></radialGradient>
+  <linearGradient id="gShadeL" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#05070D" stop-opacity="0.82"/><stop offset="0.55" stop-color="#05070D" stop-opacity="0"/></linearGradient>
+  <linearGradient id="gShadeR" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#05070D" stop-opacity="0.82"/><stop offset="0.55" stop-color="#05070D" stop-opacity="0"/></linearGradient>
+  <linearGradient id="gShadeB" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#05070D" stop-opacity="0.85"/><stop offset="0.45" stop-color="#05070D" stop-opacity="0"/></linearGradient>
+  <linearGradient id="gShadeT" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05070D" stop-opacity="0.8"/><stop offset="0.4" stop-color="#05070D" stop-opacity="0"/></linearGradient>
   <pattern id="pDots" width="48" height="48" patternUnits="userSpaceOnUse"><circle cx="24" cy="24" r="2" fill="#FFFFFF" opacity="0.06"/></pattern>
   <pattern id="pTiles" width="90" height="90" patternUnits="userSpaceOnUse"><rect width="90" height="90" fill="none" stroke="#FFFFFF" stroke-opacity="0.06" stroke-width="3"/></pattern>
   <clipPath id="cMirror"><rect x="-210" y="-330" width="420" height="660" rx="200"/></clipPath>

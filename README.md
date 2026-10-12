@@ -22,9 +22,12 @@ damit der einzige Nicht-Design-Skill hier — er hängt am selben Submodul-Mount
 weil er ebenfalls nach `.claude/skills/` gehört. Er setzt eine installierte
 Bibliothek voraus, Details in `_scrapling-meta/NOTICE.md`.
 
-`wolf-erklaervideo` baut animierte Erklärvideos mit einem augenlosen Cartoon-Wolf
-(halal-tauglich, ohne Musik). Stimmenmodelle, Schriften und Renderausgaben liegen
-nicht im Repo – `wolf-erklaervideo/setup.sh` lädt sie nach.
+`wolf-erklaervideo` baut Erklärvideos mit einem Wolf im Gorilla-Bum-Stil
+(halal-tauglich, ohne Musik, Augen stark vereinfacht): v2 aus halbrealistischen
+Standbildern mit lokaler Qwen3-Stimme, v1 als reine SVG-Animation. Die geprüften
+Standbilder liegen unter `wolf-erklaervideo/v2/img/final/`. Stimmenmodelle,
+Schriften und Renderausgaben liegen nicht im Repo – `wolf-erklaervideo/setup.sh`
+lädt sie nach.
 
 ## Einbinden in ein Projekt
 

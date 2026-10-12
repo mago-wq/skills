@@ -7,7 +7,7 @@ const fs = require("fs"), path = require("path");
 (async () => {
   const [scenefile, out, fpsS, f0S, f1S, flag, sfxOut] = process.argv.slice(2);
   const fps = parseInt(fpsS, 10), f0 = parseInt(f0S, 10), f1 = parseInt(f1S, 10);
-  const html = fs.readFileSync(path.join(__dirname, "index.html"), "utf8").replace("SCENEFILE", scenefile);
+  const html = fs.readFileSync(path.join(__dirname, "index.html"), "utf8").replace("SCENEFILE", scenefile).replace("TIMELINEFILE", process.env.TL_FILE || "timeline.js");
   const tmp = path.join(__dirname, `_render_${process.pid}.html`);
   fs.writeFileSync(tmp, html);
   const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium", args: ["--font-render-hinting=none", "--disable-gpu"] });
@@ -16,6 +16,7 @@ const fs = require("fs"), path = require("path");
   page.on("pageerror", (e) => { pageErr = e.message; console.error("PAGEERROR", e.message); });
   await page.goto("file://" + tmp);
   await page.evaluate(() => document.fonts.ready);
+  if (await page.evaluate(() => !!window.preloadImages)) console.log('images:', await page.evaluate(() => window.preloadImages()));
   await page.waitForTimeout(400);
   if (flag === "--sfx") {
     const sfx = await page.evaluate(() => ({ sfx: window.SFX, duration: window.TL.duration }));

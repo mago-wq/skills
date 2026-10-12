@@ -22,7 +22,8 @@ const E = {
 };
 
 // Fortschritt zwischen a und b (0..1), optional mit Easing
-const P = (t, a, b, ease = E.inOutCubic) => (b <= a ? (t >= b ? 1 : 0) : ease(clamp((t - a) / (b - a))));
+// vor a exakt 0, nach b exakt 1 (Überschwing-Easings wie outBack liefern an den Rändern sonst Rundungsreste)
+const P = (t, a, b, ease = E.inOutCubic) => (b <= a ? (t >= b ? 1 : 0) : t <= a ? 0 : t >= b ? 1 : ease((t - a) / (b - a)));
 
 // Timeline-Cues aus dem Voiceover
 const S = (id) => { if (!TL.lines[id]) throw new Error("cue " + id); return TL.lines[id].start; };
@@ -125,3 +126,28 @@ function renderFrame(t) {
 const WIPES = [];
 let OVERLAY = null;
 window.renderFrame = renderFrame;
+
+// ---------- Standbilder (v2) ----------
+// Bilder vorab dekodieren, damit kein Frame ohne Bild gerendert wird.
+const IMAGES = new Set();
+function img(name) { IMAGES.add(name); return "../v2/img/final/" + name; }
+window.preloadImages = async () => {
+  await Promise.all([...IMAGES].map((n) => new Promise((res) => {
+    const im = new Image(); im.onload = () => im.decode().then(res, res); im.onerror = res; im.src = "../v2/img/final/" + n;
+  })));
+  return IMAGES.size;
+};
+// Vollbild-Standbild mit Ken-Burns-Bewegung. k = 0..1 Fortschritt in der Szene.
+// o.z0/o.z1 Zoom, o.x0/o.x1/o.y0/o.y1 Fokuspunkt (0..1), o.dim Abdunklung, o.vig Vignette
+function still(name, k, o = {}) {
+  const e = E.inOutSine(clamp(k));
+  const z = lerp(o.z0 != null ? o.z0 : 1.0, o.z1 != null ? o.z1 : 1.08, e);
+  const fxp = lerp(o.x0 != null ? o.x0 : 0.5, o.x1 != null ? o.x1 : 0.5, e) * W;
+  const fyp = lerp(o.y0 != null ? o.y0 : 0.5, o.y1 != null ? o.y1 : 0.5, e) * H;
+  let g = `<g transform="translate(${fx(fxp)} ${fx(fyp)}) scale(${fx(z)}) translate(${fx(-fxp)} ${fx(-fyp)})">` +
+    `<image href="${img(name)}" x="0" y="0" width="${W}" height="${H}" preserveAspectRatio="xMidYMid slice"/></g>`;
+  if (o.dim) g += `<rect width="${W}" height="${H}" fill="#000" opacity="${fx(o.dim)}"/>`;
+  if (o.vig !== false) g += `<rect width="${W}" height="${H}" fill="url(#gVignette)"/>`;
+  if (o.grad) g += `<rect width="${W}" height="${H}" fill="url(#${o.grad})"/>`;
+  return g;
+}

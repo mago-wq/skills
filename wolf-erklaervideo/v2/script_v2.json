@@ -1,0 +1,562 @@
+{
+ "lines": [
+  {
+   "id": "i1",
+   "text": "Wolf wacht auf.",
+   "voice": "narrator",
+   "pause": 0.3
+  },
+  {
+   "id": "i2",
+   "text": "Irgendwas stimmt nicht.",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "i3",
+   "text": "Kein Feuer. Kein Antrieb. Einfach nur platt.",
+   "voice": "narrator",
+   "pause": 0.5
+  },
+  {
+   "id": "i4",
+   "text": "Wolf schaut in den Spiegel.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "i5",
+   "text": "Gleicher Wolf. Aber der Akku? Leer.",
+   "voice": "narrator",
+   "pause": 0.3
+  },
+  {
+   "id": "i6",
+   "text": "Verdacht: niedriges Testosteron.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "i7",
+   "text": "Keine seltene Krankheit. Oft einfach Jahre schlechter Gewohnheiten.",
+   "voice": "narrator",
+   "pause": 0.3
+  },
+  {
+   "id": "i9",
+   "text": "Dann leuchtet Wolfs Telefon auf. Werbung.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "i10",
+   "text": "Kauf jetzt Testo-Gummibärchen! Über Nacht zum Alphawolf!",
+   "voice": "ad",
+   "pause": 0.3
+  },
+  {
+   "id": "i11",
+   "text": "Wolf lacht. Wischt weg. Erledigt.",
+   "voice": "narrator",
+   "pause": 0.3
+  },
+  {
+   "id": "i12",
+   "text": "Wolf kauft sein Testosteron nicht.",
+   "voice": "narrator",
+   "pause": 0.15
+  },
+  {
+   "id": "i13",
+   "text": "Wolf baut es auf.",
+   "voice": "narrator",
+   "pause": 0.3
+  },
+  {
+   "id": "i14",
+   "text": "Heute: das Fundament. Zurück auf ein gesundes Normalniveau.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "i15",
+   "text": "Nicht auf Superheld. Auf normal.",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "i16",
+   "text": "Und der Kopf? Kommt später.",
+   "voice": "narrator",
+   "pause": 0.6
+  },
+  {
+   "id": "s1",
+   "text": "Erstens: Schlaf.",
+   "voice": "narrator",
+   "pause": 0.3
+  },
+  {
+   "id": "s2",
+   "text": "Klingt langweilig. Ist es nicht.",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "s3",
+   "text": "Ein Großteil von Wolfs Testosteron entsteht, während er schläft wie ein Stein.",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "s4",
+   "text": "Eine Studie: Junge, gesunde Männer schlafen eine Woche lang nur fünf Stunden pro Nacht.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "s5",
+   "text": "Ergebnis?",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "s6",
+   "text": "Zehn bis fünfzehn Prozent weniger Testosteron. Tagsüber.",
+   "voice": "narrator",
+   "pause": 0.3
+  },
+  {
+   "id": "s7",
+   "text": "Wolf ist platt. Und weiß nicht mal, warum.",
+   "voice": "narrator",
+   "pause": 0.4
+  },
+  {
+   "id": "s8",
+   "text": "Also: sieben bis neun Stunden. Fest eingeplant.",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "s9",
+   "text": "Koffein? Nur bis etwa fünfzehn Uhr. Es wirkt stundenlang nach.",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "s10",
+   "text": "Dunkles Zimmer. Gleiche Schlafenszeit. Gleiche Aufstehzeit.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "s11",
+   "text": "Kein leuchtendes Rechteck bis zwei Uhr nachts.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "s12",
+   "text": "Das allein ruiniert den ganzen Plan.",
+   "voice": "narrator",
+   "pause": 0.3
+  },
+  {
+   "id": "s13",
+   "text": "Tagsüber dann: raus in die Sonne.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "s14",
+   "text": "Gut für die innere Uhr. Und mittags im Sommer fürs Vitamin D.",
+   "voice": "narrator",
+   "pause": 0.65
+  },
+  {
+   "id": "t1",
+   "text": "Zweitens: Schwer heben. Schlank werden.",
+   "voice": "narrator",
+   "pause": 0.3
+  },
+  {
+   "id": "t2",
+   "text": "Wolf macht schwere Kniebeugen. Kreuzheben. Drücken.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "t3",
+   "text": "Und die großen Muskeln? Kurz in Panik.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "t4",
+   "text": "Die Panik funkt an die Zentrale.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "t5",
+   "text": "Zentrale! Zentrale! Das war richtig schwer! Nächstes Mal brauchen wir mehr Kraft!",
+   "voice": "muscle",
+   "pause": 0.2
+  },
+  {
+   "id": "t6",
+   "text": "Verstanden. Befehl geht raus.",
+   "voice": "brain",
+   "pause": 0.2
+  },
+  {
+   "id": "t7",
+   "text": "Wie viel mehr?",
+   "voice": "brain",
+   "pause": 0.2
+  },
+  {
+   "id": "t8",
+   "text": "Alles.",
+   "voice": "muscle",
+   "pause": 0.55
+  },
+  {
+   "id": "t9",
+   "text": "Zugegeben: stark vereinfacht.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "t10",
+   "text": "Aber schwere Grundübungen heben das Testosteron kurz an.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "t11",
+   "text": "Langfristig wirkt Training indirekt: mehr Muskeln, weniger Fett.",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "t12",
+   "text": "Darum: Kniebeugen, Kreuzheben, Rudern, Drücken, Klimmzüge.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "t13",
+   "text": "Nicht eine Stunde Bizeps vorm Spiegel.",
+   "voice": "narrator",
+   "pause": 0.55
+  },
+  {
+   "id": "t14",
+   "text": "Dann: der heimliche Saboteur. Körperfett.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "t15",
+   "text": "Fett ist nicht nur Speicher. Fett ist aktiv.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "t16",
+   "text": "Es bildet ein Enzym: Aromatase. Und die wandelt Testosteron in Östrogen um.",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "t17",
+   "text": "Mehr Fett. Mehr Östrogen. Weniger Testosteron. Noch mehr Fett.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "t18",
+   "text": "Ein Teufelskreis.",
+   "voice": "narrator",
+   "pause": 0.5
+  },
+  {
+   "id": "t19",
+   "text": "Also bleibt Wolf schlank. Aber wie schlank?",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "t20",
+   "text": "Zwölf bis fünfzehn Prozent Körperfett. Faustregel aus dem Kraftsport, keine medizinische Norm.",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "t21",
+   "text": "Unter acht Prozent? Zu extrem. Die Hormone können absacken.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "t22",
+   "text": "Über zwanzig Prozent? Dann: Kaloriendefizit. Dreihundert bis fünfhundert Kalorien am Tag.",
+   "voice": "narrator",
+   "pause": 0.65
+  },
+  {
+   "id": "e1",
+   "text": "Drittens: Wolf isst echtes Essen.",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "e2",
+   "text": "Kurze Frage: Woraus wird Testosteron gebaut?",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "e3",
+   "text": "Aus Cholesterin.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "e4",
+   "text": "Das baut der Körper größtenteils selbst.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "e5",
+   "text": "Aber sehr fettarmes Essen kann das Testosteron drücken.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "e6",
+   "text": "Also isst Wolf genug Fett.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "e7",
+   "text": "Eier und rotes Fleisch, in Maßen. Natürlich halal.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "e8",
+   "text": "Avocado. Olivenöl.",
+   "voice": "narrator",
+   "pause": 0.15
+  },
+  {
+   "id": "e9",
+   "text": "Und fetten Fisch wie Lachs.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "e10",
+   "text": "Dazu genug Eiweiß.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "c1",
+   "text": "Viertens: Wolf hat seinen Stress im Griff.",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "c2",
+   "text": "Nächster Gegenspieler: Kortisol.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "c3",
+   "text": "Dabei ist Kortisol nicht böse. Es hilft bei Stress, hält den Blutzucker stabil.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "c4",
+   "text": "Problem: wenn es dauerhaft hoch bleibt. Durch Schlafmangel, Übertraining, nächtliches Scrollen.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "c5",
+   "text": "Dann kippt es.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "c6",
+   "text": "Es treibt den Blutzucker hoch. Fördert Bauchfett. Drückt das Testosteron.",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "c7",
+   "text": "Also: Schlaf schützen. Stress runter.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "c8",
+   "text": "Alkohol? Lässt er sowieso weg.",
+   "voice": "narrator",
+   "pause": 0.3
+  },
+  {
+   "id": "c9",
+   "text": "Kortisol sinkt. Und das Testosteron? Darf wieder steigen.",
+   "voice": "narrator",
+   "pause": 0.7
+  },
+  {
+   "id": "r1",
+   "text": "Der ganze Plan fürs Rudel.",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "r2",
+   "text": "Sieben bis neun Stunden Schlaf.",
+   "voice": "narrator",
+   "pause": 0.15
+  },
+  {
+   "id": "r3",
+   "text": "Schwere Grundübungen.",
+   "voice": "narrator",
+   "pause": 0.15
+  },
+  {
+   "id": "r4",
+   "text": "Schlank bleiben.",
+   "voice": "narrator",
+   "pause": 0.15
+  },
+  {
+   "id": "r5",
+   "text": "Echte Fette. Genug Eiweiß.",
+   "voice": "narrator",
+   "pause": 0.15
+  },
+  {
+   "id": "r6",
+   "text": "Weniger Stress. Kein Scrollen um zwei Uhr nachts.",
+   "voice": "narrator",
+   "pause": 0.3
+  },
+  {
+   "id": "r7",
+   "text": "Kein Gummibärchen hat das geschafft.",
+   "voice": "narrator",
+   "pause": 0.15
+  },
+  {
+   "id": "r8",
+   "text": "Kein Pulver hat das geschafft.",
+   "voice": "narrator",
+   "pause": 0.15
+  },
+  {
+   "id": "r9",
+   "text": "Wolf hat das geschafft.",
+   "voice": "narrator",
+   "pause": 0.6
+  },
+  {
+   "id": "r10",
+   "text": "Wochen vergehen. Dann Monate.",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "r11",
+   "text": "Wolf wacht wieder auf. Schaut in den Spiegel.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "r12",
+   "text": "Gleicher Wolf. Nur diesmal ist der Akku voll.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "r13",
+   "text": "Das Feuer ist zurück.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "r14",
+   "text": "Und Wolf lächelt sein Spiegelbild an. Endlich.",
+   "voice": "narrator",
+   "pause": 0.3
+  },
+  {
+   "id": "r15",
+   "text": "Das ist kein Glück. Das ist ein Plan. Durchgezogen.",
+   "voice": "narrator",
+   "pause": 0.7
+  },
+  {
+   "id": "r16",
+   "text": "Bleibt der Akku trotzdem leer? Ab zum Arzt.",
+   "voice": "narrator",
+   "pause": 0.5
+  },
+  {
+   "id": "n1",
+   "text": "Und das hier? Ist erst das Fundament. Gesundes Normalniveau.",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "n2",
+   "text": "Doch ein Mitspieler fehlt noch.",
+   "voice": "narrator",
+   "pause": 0.3
+  },
+  {
+   "id": "n3",
+   "text": "Er sitzt nicht im Bett. Nicht in der Küche. Nicht im Kraftraum.",
+   "voice": "narrator",
+   "pause": 0.2
+  },
+  {
+   "id": "n4",
+   "text": "Er sitzt im Kopf.",
+   "voice": "narrator",
+   "pause": 0.3
+  },
+  {
+   "id": "n5",
+   "text": "Wettbewerb. Siegen. Mentalität.",
+   "voice": "narrator",
+   "pause": 0.25
+  },
+  {
+   "id": "n6",
+   "text": "Was Siegen wirklich mit Testosteron macht? Und was nur Mythos ist? Im nächsten Video.",
+   "voice": "narrator",
+   "pause": 0.3
+  },
+  {
+   "id": "n7",
+   "text": "Das Rudel wartet.",
+   "voice": "narrator",
+   "pause": 0.9
+  }
+ ]
+}

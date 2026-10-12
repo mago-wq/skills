@@ -6,5 +6,7 @@ render/
 src/node_modules/
 src/package-lock.json
 src/timeline.js
+src/timeline_v2.js
+v2/img/final/blur/
 src/_*.html
 __pycache__/
