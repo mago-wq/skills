@@ -1,0 +1,42 @@
+{
+ "lines": [
+  {
+   "id": "t16",
+   "start": 0.03,
+   "end": 5.54,
+   "parts": [
+    0.0,
+    2.86
+   ],
+   "heard": "es bildet ein enzymen aromatase und die wandel testosteron in oestrogen um",
+   "sim": 0.96
+  },
+  {
+   "id": "t17",
+   "start": 5.64,
+   "end": 9.78,
+   "parts": [
+    0.0,
+    0.77,
+    1.84,
+    3.37
+   ],
+   "heard": "mehr fett mehr oestrogen weniger testosteron noch mehr fett",
+   "sim": 0.98
+  },
+  {
+   "id": "t18",
+   "start": 9.97,
+   "end": 11.18,
+   "parts": [
+    0.0
+   ],
+   "heard": "ein teufelskreis",
+   "sim": 1.0
+  }
+ ],
+ "score": 0.982,
+ "removed": [],
+ "dur": 11.18,
+ "take": 1
+}

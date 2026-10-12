@@ -1,0 +1,39 @@
+{
+ "lines": [
+  {
+   "id": "c1",
+   "start": 0.03,
+   "end": 2.73,
+   "parts": [
+    0.0
+   ],
+   "heard": "viertens wolf hat seinen stress im griff",
+   "sim": 1.0
+  },
+  {
+   "id": "c2",
+   "start": 3.11,
+   "end": 5.13,
+   "parts": [
+    0.0
+   ],
+   "heard": "nächster gegenspieler kortisol",
+   "sim": 1.0
+  },
+  {
+   "id": "c3",
+   "start": 5.51,
+   "end": 10.56,
+   "parts": [
+    0.0,
+    2.07
+   ],
+   "heard": "dabei ist cortisol nicht böse es hilft bei stress hält den blutzucker stabil",
+   "sim": 0.99
+  }
+ ],
+ "score": 0.997,
+ "removed": [],
+ "dur": 10.57,
+ "take": 1
+}

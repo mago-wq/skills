@@ -1,0 +1,21 @@
+{
+ "lines": [
+  {
+   "id": "t5",
+   "start": 0.03,
+   "end": 5.74,
+   "parts": [
+    0.0,
+    1.18,
+    2.52,
+    4.05
+   ],
+   "heard": "zentrale zentrale das war richtig schwer nächstes mal brauchen wir mehr kraft",
+   "sim": 1.0
+  }
+ ],
+ "score": 1.0,
+ "removed": [],
+ "dur": 5.8,
+ "take": 1
+}
