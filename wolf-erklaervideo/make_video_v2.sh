@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# v2-Pipeline: lokales Voiceover (OmniVoice/VoiceStudio) -> Standbilder + Einblendungen -> Ton (-14 LUFS) -> fertiges MP4.
+# v2-Pipeline: lokales Voiceover (VoxCPM2/VoiceStudio) -> Standbilder + Einblendungen -> Ton (-14 LUFS) -> fertiges MP4.
 #   ./make_video_v2.sh [skript.json] [ausgabe.mp4]
 # Erwartet die Standbilder in v2/img/final/<SHOT>.jpg (1920x1080).
 # Umgebungsvariablen: WORKERS (parallele Renderer, Standard 4), SKIP_TTS=1 (vorhandenes Voiceover weiterverwenden),
-#                     ENGINE=omni|qwen, MAX_TAKES (TTS-Takes je Abschnitt), SPEED (Tempo-Faktor)
+#                     ENGINE=voxcpm|omni|qwen, MAX_TAKES (TTS-Takes je Abschnitt), SPEED (Tempo-Faktor)
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 SCRIPT="${1:-$ROOT/v2/script_v2.json}"
@@ -15,9 +15,9 @@ export TL_FILE=timeline_v2.js
 mkdir -p "$ROOT/audio" "$CH"
 
 if [ "${SKIP_TTS:-0}" != "1" ]; then
-  # ENGINE=omni (Standard): OmniVoice aus VoiceStudio in eigener venv; ENGINE=qwen: Qwen3-TTS mit System-Python
-  ENGINE="${ENGINE:-omni}"
-  if [ "$ENGINE" = "omni" ]; then PY="${TTS_PY:-$ROOT/.venv-vs/bin/python}"; else PY="${TTS_PY:-python3}"; fi
+  # ENGINE=voxcpm (Standard) und omni laufen in der eigenen venv aus setup.sh; ENGINE=qwen: Qwen3-TTS mit System-Python
+  ENGINE="${ENGINE:-voxcpm}"
+  if [ "$ENGINE" = "qwen" ]; then PY="${TTS_PY:-python3}"; else PY="${TTS_PY:-$ROOT/.venv-vs/bin/python}"; fi
   echo "== 1/6 Voiceover ($ENGINE lokal, abschnittsweise, per Whisper geprüft)"
   ENGINE="$ENGINE" "$PY" "$ROOT/src/tts_local.py" "$ROOT" "$SCRIPT" 2>&1 | grep -v -i "sox" | tee "$ROOT/audio/tts_${ENGINE}_log.txt"
 fi

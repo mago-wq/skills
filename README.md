@@ -24,7 +24,7 @@ Bibliothek voraus, Details in `_scrapling-meta/NOTICE.md`.
 
 `wolf-erklaervideo` baut Erklärvideos mit einem Wolf im Gorilla-Bum-Stil
 (ohne Musik, Augen stark vereinfacht): v2 aus halbrealistischen
-Standbildern mit lokaler OmniVoice-Stimme aus VoiceStudio, v1 als reine SVG-Animation. Die geprüften
+Standbildern mit lokaler VoxCPM2-Stimme (über VoiceStudio), v1 als reine SVG-Animation. Die geprüften
 Standbilder liegen unter `wolf-erklaervideo/v2/img/final/`. Stimmenmodelle,
 Schriften und Renderausgaben liegen nicht im Repo – `wolf-erklaervideo/setup.sh`
 lädt sie nach.

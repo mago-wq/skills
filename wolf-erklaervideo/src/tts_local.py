@@ -1,14 +1,14 @@
-"""Voiceover mit lokalem TTS: OmniVoice aus VoiceStudio (Standard) oder Qwen3-TTS.
+"""Voiceover mit lokalem TTS: VoxCPM2 (Standard), OmniVoice aus VoiceStudio oder Qwen3-TTS.
 
-ENGINE=omni (Standard): k2-fsa/OmniVoice, die Standard-Engine von VoiceStudio (github.com/debpalash/VoiceStudio).
-  Muttersprachliches Deutsch. Der Erzähler wird von einer Referenz geklont (v2/voice_ref/narrator_omnivoice.wav + .txt,
-  selbst per Voice-Design "male, middle-aged, low pitch" erzeugt), damit er in allen Abschnitten gleich klingt.
-  Lizenz der Gewichte: CC-BY-NC (nicht kommerziell). Läuft in einer eigenen venv (transformers >= 5.10).
-ENGINE=voxcpm: VoxCPM2 (OpenBMB, ebenfalls in VoiceStudio), native 48 kHz, sauberer "Studio"-Klang, Lizenz Apache-2.0.
+ENGINE=voxcpm (Standard): VoxCPM2 (OpenBMB, eine der Engines in VoiceStudio, github.com/debpalash/VoiceStudio),
+  native 48 kHz, sauberer "Studio"-Klang, Lizenz Apache-2.0. Läuft in einer eigenen venv (transformers >= 5.10).
   Der Erzähler spricht im Fortsetzungsmodus aus der gewählten Hörprobe weiter (v2/voice_ref/narrator_voxcpm.wav + .txt):
   so bleibt es exakt diese Stimme, und "Wolf" wird mit offenem o gesprochen (der Referenz-Modus machte daraus "Wulf").
   Das Modell wiederholt dabei anfangs kurz das Ende der Vorlage – das wird per Whisper erkannt und abgeschnitten.
   Nebenstimmen per Voice-Design (Beschreibung in Klammern vor dem Text). Danach Studio-Mastering-Kette.
+  Auf CPU ca. 20x langsamer als Echtzeit: ONLY_CHUNKS="5-10" erzeugt nur diese Abschnitte (siehe helper_tts.sh).
+ENGINE=omni: k2-fsa/OmniVoice, die Standard-Engine von VoiceStudio. Muttersprachliches Deutsch, Erzähler geklont aus
+  v2/voice_ref/narrator_omnivoice.wav + .txt. Klingt dumpfer; Lizenz der Gewichte CC-BY-NC (nicht kommerziell).
 ENGINE=qwen: Qwen3-TTS 1.7B CustomVoice, Sprecher "Ryan" (englischer Akzent).
 
 Das Modell spricht zusammenhängende Abschnitte (mehrere Skriptzeilen am Stück). Danach:
@@ -18,12 +18,13 @@ Das Modell spricht zusammenhängende Abschnitte (mehrere Skriptzeilen am Stück)
   4. Verständlichkeit je Zeile prüfen; schwache Abschnitte neu erzeugen (bis MAX_TAKES), bester Take gewinnt.
 Ausgabe: audio/chunks_<engine>/<id>.wav/.json (Neustart-sicher), audio/voiceover_v2.wav, src/timeline_v2.js
 
-Aufruf: ENGINE=omni <venv>/bin/python tts_local.py <projektordner> <script_v2.json>
+Aufruf: ENGINE=voxcpm <venv>/bin/python tts_local.py <projektordner> <script_v2.json>
 """
 import difflib
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import time
@@ -38,25 +39,27 @@ import align  # noqa: E402  (Whisper + Wortausrichtung)
 
 SR = 48000
 MAX_TAKES = int(os.environ.get("MAX_TAKES", "3"))
-ENGINE = os.environ.get("ENGINE", "omni")
+ENGINE = os.environ.get("ENGINE", "voxcpm")
 SPEED = float(os.environ.get("SPEED", "1.08" if ENGINE == "qwen" else "1.0"))
 MAX_WORDS = int(os.environ.get("MAX_WORDS", "40"))
 MAX_GAP = float(os.environ.get("MAX_GAP", "0.38"))
 GOOD = float(os.environ.get("GOOD", "0.72"))
-WOLF_SPELL = os.environ.get("WOLF_SPELL", "Wolf")
+WOLF_SPELL = os.environ.get("WOLF_SPELL", "Wolf")  # Schreibweise nur für die Sprachausgabe (z. B. "Wolff" für ein offeneres o)
 # Nur bestimmte Abschnitte erzeugen (z. B. "8,13,18" oder "8-12"), etwa für parallele Helfer-Sitzungen; ohne Zusammensetzen
 ONLY = set()
 for _p in filter(None, os.environ.get("ONLY_CHUNKS", "").split(",")):
     _a, _, _b = _p.partition("-")
-    ONLY |= set(range(int(_a), int(_b or _a) + 1))  # Schreibweise nur für die Sprachausgabe (z. B. "Wolff" für ein offeneres o)
+    ONLY |= set(range(int(_a), int(_b or _a) + 1))
 IMPROVE_BELOW = float(os.environ.get("IMPROVE_BELOW", "0"))  # >0: vorhandene Abschnitte mit schwächerer Zeile nachbessern
 EXTRA = int(os.environ.get("EXTRA", "2"))
 TEMPO2 = float(os.environ.get("TEMPO2", "1.0"))  # nachträgliche Straffung vorhandener Abschnitte (nur mit REALIGN=1, einmalig)
-PAUSE_F = float(os.environ.get("PAUSE_F", "1.0"))
-LEVEL = float(os.environ.get("LEVEL", "-27.5"))  # Ziel-Lautheit je Abschnitt (LUFS) beim Zusammensetzen  # Faktor für die Pausen zwischen Abschnitten
+PAUSE_F = float(os.environ.get("PAUSE_F", "1.0"))  # Faktor für die Pausen zwischen Abschnitten
+LEVEL = float(os.environ.get("LEVEL", "-27.5"))  # Ziel-Lautheit je Abschnitt (LUFS) beim Zusammensetzen
 MODEL = os.environ.get("MODEL") or os.path.join(ROOT, "models", {"omni": "OmniVoice", "voxcpm": "VoxCPM2"}.get(
     ENGINE, os.path.join("qwen3tts", "Qwen3-TTS-12Hz-1.7B-CustomVoice")))
 OUT = os.path.join(ROOT, "audio", "chunks_" + ENGINE)
+# Fertige Abschnitte im Repo: werden übernommen, solange ihr Text zum Skript passt (spart Stunden auf CPU)
+CACHE = os.path.join(ROOT, "v2", "voice_cache", "chunks_" + ENGINE)
 NARRATOR_REF = os.environ.get("NARRATOR_REF", os.path.join(ROOT, "v2", "voice_ref", "narrator_%s.wav" % ("voxcpm" if ENGINE == "voxcpm" else "omnivoice")))
 # VoxCPM2-Voice-Design: freie Beschreibung, wird in Klammern vor den Text gesetzt
 DESC = {
@@ -277,6 +280,11 @@ def main():
             continue
         cid = "%02d_%s" % (ci, chunk[0]["id"])
         jp = os.path.join(OUT, cid + ".json")
+        text = " ".join(l["text"] for l in chunk)
+        cj = os.path.join(CACHE, cid + ".json")
+        if not os.path.exists(jp) and os.path.exists(cj) and json.load(open(cj, encoding="utf-8")).get("text") == text:
+            shutil.copy(cj, jp)
+            shutil.copy(os.path.join(CACHE, cid + ".wav"), os.path.join(OUT, cid + ".wav"))
         best, takes = None, MAX_TAKES
         if os.path.exists(jp):
             old = json.load(open(jp, encoding="utf-8"))
@@ -288,7 +296,6 @@ def main():
         if model is None:
             model = Engine()
         voice = chunk[0].get("voice", "narrator")
-        text = " ".join(l["text"] for l in chunk)
         for take in range(takes):
             t0 = time.time()
             raw, sr = model.generate(text, voice)
@@ -306,7 +313,7 @@ def main():
             if not low:
                 break
         audio, info, take = best
-        info["take"] = take
+        info["take"], info["text"] = take, text
         if IMPROVE_BELOW > 0 and os.path.exists(jp):
             info["improved"] = True
         write_wav(os.path.join(OUT, cid + ".wav"), audio)

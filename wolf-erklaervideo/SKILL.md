@@ -1,6 +1,6 @@
 ---
 name: wolf-erklaervideo
-description: Deutsches Erklärvideo mit einem Wolf im Stil von „Gorilla Bum“ (Tier erzählt in der dritten Person ein Gesundheitsthema), ohne Musik und mit stark vereinfachten Augen. v2 (Standard) baut das Video aus halbrealistischen KI-Standbildern mit Ken-Burns-Bewegung, animierten Einblendungen und Infografiken; das Voiceover spricht lokal OmniVoice aus VoiceStudio (muttersprachliches Deutsch, geklonte Erzählerstimme). v1 ist die rein animierte SVG-Variante mit augenlosem Cartoon-Wolf und Piper-Stimme. Verwenden, wenn ein neues Wolf-Video gebaut, ein Thema/Skript getauscht oder das vorhandene Testosteron-Video geändert werden soll.
+description: Deutsches Erklärvideo mit einem Wolf im Stil von „Gorilla Bum“ (Tier erzählt in der dritten Person ein Gesundheitsthema), ohne Musik und mit stark vereinfachten Augen. v2 (Standard) baut das Video aus halbrealistischen KI-Standbildern mit Ken-Burns-Bewegung, animierten Einblendungen und Infografiken; das Voiceover spricht lokal VoxCPM2 aus VoiceStudio (klare Studio-Stimme, 48 kHz, Apache-2.0). v1 ist die rein animierte SVG-Variante mit augenlosem Cartoon-Wolf und Piper-Stimme. Verwenden, wenn ein neues Wolf-Video gebaut, ein Thema/Skript getauscht oder das vorhandene Testosteron-Video geändert werden soll.
 ---
 
 # Wolf-Erklärvideo
@@ -20,22 +20,23 @@ Tier ein muskulöser grauer Wolf im orangen Tanktop mit dunkelblauen Shorts.
   Im Bild ist nur der Wolf zu sehen, keine anderen Figuren.
 - Gesundheitsaussagen vorsichtig formulieren, Vereinfachungen benennen. Am Ende steht der Hinweis „keine ärztliche Beratung“.
 
-## v2 – Standbilder + OmniVoice-Stimme (Standard)
+## v2 – Standbilder + VoxCPM2-Stimme (Standard)
 
 | Datei | Zweck |
 |---|---|
 | `v2/script_v2.json` | Sprechertext: Zeilen mit `id`, `text`, `voice` (`narrator`, `muscle`, `brain`, `ad`), `pause` |
 | `v2/image_prompts.json` | Die tatsächlich verwendeten Bild-Prompts je Shot (Figur-Block + Szene + Schlussblock) |
 | `v2/img/final/S*.jpg` | Die geprüften Standbilder (1920×1080). S31 ist der Teaser mit roten Instinkt-Augen |
-| `src/tts_local.py` | Voiceover lokal, `ENGINE=omni` (Standard: OmniVoice aus [VoiceStudio](https://github.com/debpalash/VoiceStudio), Erzähler geklont aus `v2/voice_ref/narrator_omnivoice.wav` + `.txt`) oder `ENGINE=qwen` (Qwen3-TTS). Spricht **Abschnitte** aus mehreren Zeilen am Stück; Einzelzeilen erzeugen Seufzer und Kichern. Whisper hört jeden Sprechabschnitt, Nicht-Sprache („\*seufzt\*“) wird herausgeschnitten, Pausen werden gekürzt, und die Wortausrichtung (`align.py`) liefert Start, Ende und Satzanfänge (`parts`) jeder Zeile. Schwache Abschnitte werden neu erzeugt, der beste Take gewinnt. Ergebnis: `audio/chunks_<engine>/`, `audio/voiceover_v2.wav`, `src/timeline_v2.js` |
+| `src/tts_local.py` | Voiceover lokal, `ENGINE=voxcpm` (Standard: VoxCPM2 aus [VoiceStudio](https://github.com/debpalash/VoiceStudio); der Erzähler spricht im Fortsetzungsmodus aus `v2/voice_ref/narrator_voxcpm.wav` + `.txt` weiter, danach Studio-Mastering), `ENGINE=omni` (OmniVoice) oder `ENGINE=qwen` (Qwen3-TTS). Spricht **Abschnitte** aus mehreren Zeilen am Stück; Einzelzeilen erzeugen Seufzer und Kichern. Whisper hört jeden Sprechabschnitt, Nicht-Sprache („\*seufzt\*“) wird herausgeschnitten, Pausen werden gekürzt, und die Wortausrichtung (`align.py`) liefert Start, Ende und Satzanfänge (`parts`) jeder Zeile. Schwache Abschnitte werden neu erzeugt, der beste Take gewinnt. Ergebnis: `audio/chunks_<engine>/`, `audio/voiceover_v2.wav`, `src/timeline_v2.js`. Abschnitte aus `v2/voice_cache/chunks_<engine>/` werden übernommen, solange ihr Text zum Skript passt |
+| `helper_tts.sh` | Erzeugt nur bestimmte Abschnitte (`ONLY_CHUNKS`) in einer weiteren Cloud-Sitzung und pusht sie nach `v2/voice_cache/` – zum Verteilen auf mehrere Maschinen |
 | `src/align.py` | Whisper (sherpa-onnx) + Needleman-Wunsch-Wortausrichtung, Normalisierung von Zahlen („10-15%“ → „zehn bis fünfzehn prozent“) |
 | `src/scenes_v2.js` | Alle Szenen. `shot()` blendet über die vorige Szene, `photo()` zeigt ein Standbild mit Ken-Burns (`KB`-Tabelle), `kbXY()` rechnet Bildpunkte auf den Bildschirm um (für Zeiger auf Dinge im Bild). Dazu `chapterBanner()`, `tag()`, `checklist()`, `gfxBg()` (weichgezeichnetes Standbild als Grafik-Hintergrund) und `photoCard()` |
 | `src/blur_bg.py` | Erzeugt `v2/img/final/blur/` für die Grafik-Hintergründe |
 | `src/qa_frames.js` + `src/contact.py` | Prüfbilder je Szene und Kontaktbögen (Augen- und Layout-Check) |
 
 ```bash
-./setup.sh                          # einmalig, inkl. VoiceStudio + OmniVoice (~3,3 GB) – V2=0 lässt das weg, QWEN=1 lädt Qwen3-TTS dazu
-./make_video_v2.sh                  # Voiceover (CPU, ca. 1 h) -> Rendering -> render/wolf-video-v2.mp4
+./setup.sh                          # einmalig, inkl. VoxCPM2 (~4,7 GB) – V2=0 lässt das weg, OMNI=1 / QWEN=1 laden Alternativen dazu
+./make_video_v2.sh                  # Voiceover (CPU ca. 2 h, aus voice_cache Sekunden) -> Rendering -> render/wolf-video-v2.mp4
 SKIP_TTS=1 ./make_video_v2.sh       # nur neu rendern, Voiceover behalten (~10 min bei 4 Kernen)
 TL_FILE=timeline_v2.js node src/qa_frames.js scenes_v2.js v2/qa 0.3,0.65,0.95 && python3 src/contact.py v2/qa v2/qa/sheet 15
 ```
@@ -50,10 +51,14 @@ Nachbessern am Voiceover, ohne alles neu zu sprechen:
 
 Hinweise:
 
-- Stimme: OmniVoice (k2-fsa, Standard-Engine von VoiceStudio) spricht muttersprachliches Deutsch. Die Gewichte stehen
-  unter **CC-BY-NC** (nicht kommerziell) – für einen monetarisierten Kanal VoxCPM2 (Apache-2.0, ebenfalls in VoiceStudio)
-  einbauen. Neue Erzählerstimme: per Voice-Design erzeugen (`instruct="male, middle-aged, low pitch"`, `language="German"`),
-  5–10 s davon mit Transkript als `v2/voice_ref/narrator_omnivoice.wav/.txt` ablegen. Längere Referenzen verlangsamen jeden Abschnitt.
+- Stimme: VoxCPM2 (OpenBMB, Apache-2.0, also auch für monetarisierte Kanäle). Immer den **Fortsetzungsmodus**
+  (`prompt_wav_path` + `prompt_text`) nutzen: Der Referenz-Modus verändert die Stimme und spricht „Wolf“ als „Wulf“.
+  Neue Erzählerstimme: per Voice-Design eine Hörprobe erzeugen („(Beschreibung)Text“), die gewählte Probe auf 4–6 s
+  mit vollständigen Sätzen schneiden (`-ss` **vor** `-i`, sonst fehlt der letzte Satz) und mit Transkript als
+  `v2/voice_ref/narrator_voxcpm.wav/.txt` ablegen. Prüfen, ob „Wolf“ offen klingt: F1 des Vokals ≥ 470 Hz.
+- Tempo: Auf 4 CPU-Kernen braucht VoxCPM2 ca. 20 s Rechenzeit je Sekunde Sprache. Schneller ohne Qualitätsverlust:
+  Abschnitte mit `helper_tts.sh` auf weitere Cloud-Sitzungen verteilen oder auf einer GPU erzeugen.
+- Alternativ `ENGINE=omni`: OmniVoice (Standard-Engine von VoiceStudio), klingt dumpfer, Gewichte **CC-BY-NC**.
 - Alternativ `ENGINE=qwen`: Qwen3-TTS, Sprecher „Ryan“ (englischer Akzent – Whisper hört „Wolf“ oft als „Ruf“).
 - Neue Bilder erzeugt man mit Figma `generate_image` (Modell `gpt-image-2.5-sunburst`, 1536×864, auf 1920×1080 skalieren).
   Den Figur-Block aus `image_prompts.json` übernimmt man wörtlich. Danach wird jedes Bild geprüft: Augen 3–10-fach
