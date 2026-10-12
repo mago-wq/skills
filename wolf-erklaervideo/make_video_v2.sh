@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# v2-Pipeline: Qwen3-Voiceover -> Standbilder + Einblendungen -> Ton (-14 LUFS) -> fertiges MP4.
+# v2-Pipeline: lokales Voiceover (OmniVoice/VoiceStudio) -> Standbilder + Einblendungen -> Ton (-14 LUFS) -> fertiges MP4.
 #   ./make_video_v2.sh [skript.json] [ausgabe.mp4]
 # Erwartet die Standbilder in v2/img/final/<SHOT>.jpg (1920x1080).
 # Umgebungsvariablen: WORKERS (parallele Renderer, Standard 4), SKIP_TTS=1 (vorhandenes Voiceover weiterverwenden),
-#                     MAX_TAKES (TTS-Takes je Abschnitt, Standard 3), SPEED (Tempo-Faktor, Standard 1.08)
+#                     ENGINE=omni|qwen, MAX_TAKES (TTS-Takes je Abschnitt), SPEED (Tempo-Faktor)
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 SCRIPT="${1:-$ROOT/v2/script_v2.json}"
@@ -15,8 +15,11 @@ export TL_FILE=timeline_v2.js
 mkdir -p "$ROOT/audio" "$CH"
 
 if [ "${SKIP_TTS:-0}" != "1" ]; then
-  echo "== 1/6 Voiceover (Qwen3-TTS lokal, abschnittsweise, per Whisper geprüft)"
-  python3 "$ROOT/src/tts_qwen.py" "$ROOT" "$SCRIPT" 2>&1 | grep -v -i "sox" | tee "$ROOT/audio/tts_qwen_log.txt"
+  # ENGINE=omni (Standard): OmniVoice aus VoiceStudio in eigener venv; ENGINE=qwen: Qwen3-TTS mit System-Python
+  ENGINE="${ENGINE:-omni}"
+  if [ "$ENGINE" = "omni" ]; then PY="${TTS_PY:-$ROOT/.venv-vs/bin/python}"; else PY="${TTS_PY:-python3}"; fi
+  echo "== 1/6 Voiceover ($ENGINE lokal, abschnittsweise, per Whisper geprüft)"
+  ENGINE="$ENGINE" "$PY" "$ROOT/src/tts_local.py" "$ROOT" "$SCRIPT" 2>&1 | grep -v -i "sox" | tee "$ROOT/audio/tts_${ENGINE}_log.txt"
 fi
 
 echo "== 2/6 Weichgezeichnete Hintergründe für die Infografiken"

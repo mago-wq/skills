@@ -1,5 +1,7 @@
 # Große oder erzeugte Dateien – werden von setup.sh / make_video.sh neu erstellt
 models/
+vendor/
+.venv-vs/
 fonts/
 audio/
 render/

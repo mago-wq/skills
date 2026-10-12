@@ -726,11 +726,10 @@ shot("s21", cutAt("e7"), S("c1") - 0.3, (t, lt, d) => {
   const L = [[WT("e7", "Eier") - 0.05, "EIER", "egg", 300, 230, COL.orange], [WT("e7", "rotes") - 0.05, "ROTES FLEISCH · IN MASSEN", "steak", 370, 345, "#B5473A"],
     [PT("e8", 0), "AVOCADO", "avocado", 1640, 230, "#4E7A2E"], [PT("e8", 1), "OLIVENÖL", "oil", 300, 560, "#7FA22A"], [WT("e9", "Lachs") - 0.1, "LACHS", "salmon", 1640, 345, "#E0613F"]];
   L.forEach(([at, txt, n, x, y, bg]) => { const [px, py] = P2(n); g += tag(t, at, x, y, txt, { px, py, size: txt.length > 12 ? 40 : 46, bg }); });
-  g += pop(t, PT("e7", 1), 700, 450, halalBadge(0, 0, 0.95), { ease: E.outBackBig });
   g += pop(t, S("e10"), 1640, 470, pill(0, 0, "+ GENUG EIWEISS", { size: 50, bg: COL.green }), {});
   return g;
 });
-sfx(cutAt("e7"), "whoosh", 0.3); sfx(WT("e7", "Eier") - 0.05, "pop"); sfx(WT("e7", "rotes") - 0.05, "pop"); sfx(PT("e7", 1), "stamp", 0.6);
+sfx(cutAt("e7"), "whoosh", 0.3); sfx(WT("e7", "Eier") - 0.05, "pop"); sfx(WT("e7", "rotes") - 0.05, "pop");
 sfx(PT("e8", 0), "pop"); sfx(PT("e8", 1), "pop"); sfx(WT("e9", "Lachs") - 0.1, "pop"); sfx(S("e10"), "pop");
 
 // ======================= KAPITEL 4: STRESS =======================

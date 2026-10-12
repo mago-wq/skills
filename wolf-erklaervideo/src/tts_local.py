@@ -1,14 +1,19 @@
-"""Voiceover v2 mit lokalem Qwen3-TTS (1.7B CustomVoice, Sprecher "Ryan").
+"""Voiceover mit lokalem TTS: OmniVoice aus VoiceStudio (Standard) oder Qwen3-TTS.
 
-Das Modell spricht zusammenhängende Abschnitte (mehrere Skriptzeilen am Stück, wie bei der Hörprobe).
-Einzelzeilen erzeugt es unruhiger (Seufzer, Kichern). Danach:
+ENGINE=omni (Standard): k2-fsa/OmniVoice, die Standard-Engine von VoiceStudio (github.com/debpalash/VoiceStudio).
+  Muttersprachliches Deutsch. Der Erzähler wird von einer Referenz geklont (v2/voice_ref/narrator_omnivoice.wav + .txt,
+  selbst per Voice-Design "male, middle-aged, low pitch" erzeugt), damit er in allen Abschnitten gleich klingt.
+  Lizenz der Gewichte: CC-BY-NC (nicht kommerziell). Läuft in einer eigenen venv (transformers >= 5.10).
+ENGINE=qwen: Qwen3-TTS 1.7B CustomVoice, Sprecher "Ryan" (englischer Akzent).
+
+Das Modell spricht zusammenhängende Abschnitte (mehrere Skriptzeilen am Stück). Danach:
   1. Sprechabschnitte finden, jeden mit Whisper anhören.
   2. Nicht-Sprache (z. B. "*seufzt*") und Abschnitte ohne Skriptbezug herausschneiden, lange Pausen kürzen.
   3. Wortausrichtung (align.py) -> Start/Ende/Satzanfänge jeder Zeile.
   4. Verständlichkeit je Zeile prüfen; schwache Abschnitte neu erzeugen (bis MAX_TAKES), bester Take gewinnt.
-Ausgabe: audio/chunks_v2/<id>.wav/.json (Neustart-sicher), audio/voiceover_v2.wav, src/timeline_v2.js
+Ausgabe: audio/chunks_<engine>/<id>.wav/.json (Neustart-sicher), audio/voiceover_v2.wav, src/timeline_v2.js
 
-Aufruf: python3 tts_qwen.py <projektordner> <script_v2.json>
+Aufruf: ENGINE=omni <venv>/bin/python tts_local.py <projektordner> <script_v2.json>
 """
 import difflib
 import json
@@ -28,7 +33,8 @@ import align  # noqa: E402  (Whisper + Wortausrichtung)
 
 SR = 48000
 MAX_TAKES = int(os.environ.get("MAX_TAKES", "3"))
-SPEED = float(os.environ.get("SPEED", "1.08"))
+ENGINE = os.environ.get("ENGINE", "omni")
+SPEED = float(os.environ.get("SPEED", "1.0" if ENGINE == "omni" else "1.08"))
 MAX_WORDS = int(os.environ.get("MAX_WORDS", "40"))
 MAX_GAP = float(os.environ.get("MAX_GAP", "0.38"))
 GOOD = float(os.environ.get("GOOD", "0.72"))
@@ -37,8 +43,13 @@ EXTRA = int(os.environ.get("EXTRA", "2"))
 TEMPO2 = float(os.environ.get("TEMPO2", "1.0"))  # nachträgliche Straffung vorhandener Abschnitte (nur mit REALIGN=1, einmalig)
 PAUSE_F = float(os.environ.get("PAUSE_F", "1.0"))
 LEVEL = float(os.environ.get("LEVEL", "-27.5"))  # Ziel-Lautheit je Abschnitt (LUFS) beim Zusammensetzen  # Faktor für die Pausen zwischen Abschnitten
-MODEL = os.path.join(ROOT, "models", "qwen3tts", "Qwen3-TTS-12Hz-1.7B-CustomVoice")
-OUT = os.path.join(ROOT, "audio", "chunks_v2")
+MODEL = os.environ.get("MODEL") or (os.path.join(ROOT, "models", "OmniVoice") if ENGINE == "omni"
+                                    else os.path.join(ROOT, "models", "qwen3tts", "Qwen3-TTS-12Hz-1.7B-CustomVoice"))
+OUT = os.path.join(ROOT, "audio", "chunks_" + ENGINE)
+NARRATOR_REF = os.environ.get("NARRATOR_REF", os.path.join(ROOT, "v2", "voice_ref", "narrator_omnivoice.wav"))
+# OmniVoice-Voice-Design: nur festes Vokabular (Geschlecht, Alter, Tonhöhe, Akzent)
+DESIGN = {"narrator": "male, middle-aged, low pitch", "muscle": "male, young adult, low pitch",
+          "brain": "male, middle-aged, moderate pitch", "ad": "male, young adult, high pitch"}
 
 INSTRUCT = {
     "narrator": "Energischer, dynamischer männlicher YouTube-Erzähler mit tiefer, kräftiger Stimme. Pointiert, selbstbewusst, mit Spannung und trockenem Humor. Zügiges Tempo, kurze Pausen.",
@@ -55,6 +66,36 @@ FX = {
 # Abschnittsgrenzen: Kapitelanfänge und inhaltliche Brüche
 BREAK_BEFORE = {"i6", "i14", "s1", "s4", "s7", "s10", "s13", "t1", "t9", "t12", "t14", "t16", "t19",
                 "e1", "e4", "e7", "c1", "c4", "c7", "r1", "r7", "r10", "r12", "n1", "n3", "n5"}
+
+
+class Engine:
+    """Einheitliche Schnittstelle: generate(text, voice) -> (Samples float32, Abtastrate)."""
+
+    def __init__(self):
+        torch.set_num_threads(4)
+        self.refs = {}  # Stimme -> (wav-Pfad, Transkript) für gleichbleibende Klangfarbe
+        if ENGINE == "omni":
+            from omnivoice.models.omnivoice import OmniVoice
+            self.m = OmniVoice.from_pretrained(MODEL, device_map="cpu", dtype=torch.float32)
+            txt = os.path.splitext(NARRATOR_REF)[0] + ".txt"
+            if os.path.exists(NARRATOR_REF) and os.path.exists(txt):
+                self.refs["narrator"] = (NARRATOR_REF, open(txt, encoding="utf-8").read().strip())
+        else:
+            from qwen_tts import Qwen3TTSModel
+            self.m = Qwen3TTSModel.from_pretrained(MODEL, device_map="cpu", dtype=torch.float32)
+
+    def generate(self, text, voice):
+        if ENGINE == "omni":
+            if voice in self.refs:
+                wav, rt = self.refs[voice]
+                a = self.m.generate(text=text, language="German", ref_audio=wav, ref_text=rt)
+            else:
+                a = self.m.generate(text=text, language="German", instruct=DESIGN[voice])
+            x = a[0]
+            x = x.cpu().numpy() if hasattr(x, "cpu") else np.asarray(x)
+            return np.asarray(x, dtype=np.float32).reshape(-1), 24000
+        wavs, sr = self.m.generate_custom_voice(text=text, language="German", speaker="Ryan", instruct=INSTRUCT[voice])
+        return np.asarray(wavs[0] if isinstance(wavs, (list, tuple)) else wavs, dtype=np.float32).reshape(-1), sr
 
 
 def make_chunks(lines):
@@ -171,8 +212,6 @@ def clean(x, chunk):
 
 
 def main():
-    from qwen_tts import Qwen3TTSModel
-    torch.set_num_threads(4)
     lines = json.load(open(SCRIPT, encoding="utf-8"))["lines"]
     chunks = make_chunks(lines)
     os.makedirs(OUT, exist_ok=True)
@@ -190,13 +229,12 @@ def main():
             best, takes = (align.load(os.path.join(OUT, cid + ".wav")), old, old.get("take", 1)), EXTRA
             print("  %s: Nachbesserung (min %.2f)" % (cid, min(x["sim"] for x in old["lines"])), flush=True)
         if model is None:
-            model = Qwen3TTSModel.from_pretrained(MODEL, device_map="cpu", dtype=torch.float32)
+            model = Engine()
         voice = chunk[0].get("voice", "narrator")
         text = " ".join(l["text"] for l in chunk)
         for take in range(takes):
             t0 = time.time()
-            wavs, sr = model.generate_custom_voice(text=text, language="German", speaker="Ryan", instruct=INSTRUCT[voice])
-            raw = np.asarray(wavs[0] if isinstance(wavs, (list, tuple)) else wavs, dtype=np.float32).reshape(-1)
+            raw, sr = model.generate(text, voice)
             r = process(raw, sr, chunk)
             if r is None:
                 print("  %s take%d: keine Sprache erkannt" % (cid, take + 1), flush=True)
