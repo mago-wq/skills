@@ -1,0 +1,63 @@
+{
+ "lines": [
+  {
+   "id": "r12",
+   "start": 0.03,
+   "end": 2.85,
+   "parts": [
+    0.0,
+    1.18
+   ],
+   "heard": "gleicher wolf nur diesmal ist der akku voll",
+   "sim": 1.0
+  },
+  {
+   "id": "r13",
+   "start": 3.23,
+   "end": 4.3,
+   "parts": [
+    0.0
+   ],
+   "heard": "das feuer ist zurück",
+   "sim": 1.0
+  },
+  {
+   "id": "r14",
+   "start": 4.68,
+   "end": 7.31,
+   "parts": [
+    0.0,
+    2.15
+   ],
+   "heard": "und wolf lächelt sein spiegelbild an endlich",
+   "sim": 1.0
+  },
+  {
+   "id": "r15",
+   "start": 7.56,
+   "end": 10.84,
+   "parts": [
+    0.0,
+    1.3,
+    2.53
+   ],
+   "heard": "das ist kein glück das ist ein plan durchgezogen",
+   "sim": 1.0
+  },
+  {
+   "id": "r16",
+   "start": 11.04,
+   "end": 13.74,
+   "parts": [
+    0.0,
+    1.85
+   ],
+   "heard": "bleibt der akku trotzdem leer ab zum arzt",
+   "sim": 1.0
+  }
+ ],
+ "score": 1.0,
+ "removed": [],
+ "dur": 13.74,
+ "take": 1
+}

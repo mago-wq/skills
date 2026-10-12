@@ -1,0 +1,38 @@
+{
+ "lines": [
+  {
+   "id": "e4",
+   "start": 0.03,
+   "end": 2.52,
+   "parts": [
+    0.0
+   ],
+   "heard": "das baudeck körper größtenteils selbst",
+   "sim": 0.94
+  },
+  {
+   "id": "e5",
+   "start": 2.9,
+   "end": 6.51,
+   "parts": [
+    0.0
+   ],
+   "heard": "aber sehr fettarmes essen kann das testosteron drücken",
+   "sim": 1.0
+  },
+  {
+   "id": "e6",
+   "start": 6.89,
+   "end": 8.69,
+   "parts": [
+    0.0
+   ],
+   "heard": "also ist wolf genug fett",
+   "sim": 0.98
+  }
+ ],
+ "score": 0.972,
+ "removed": [],
+ "dur": 8.69,
+ "take": 1
+}

@@ -1,0 +1,30 @@
+{
+ "lines": [
+  {
+   "id": "r10",
+   "start": 0.03,
+   "end": 1.94,
+   "parts": [
+    0.0,
+    1.12
+   ],
+   "heard": "wochen vergehen dann monate",
+   "sim": 1.0
+  },
+  {
+   "id": "r11",
+   "start": 2.08,
+   "end": 4.52,
+   "parts": [
+    0.0,
+    1.33
+   ],
+   "heard": "wolf wacht wieder auf schaut in den spiegel",
+   "sim": 1.0
+  }
+ ],
+ "score": 1.0,
+ "removed": [],
+ "dur": 4.57,
+ "take": 1
+}
