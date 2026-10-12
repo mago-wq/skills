@@ -1,0 +1,54 @@
+{
+ "lines": [
+  {
+   "id": "t19",
+   "start": 0.03,
+   "end": 2.71,
+   "parts": [
+    0.0,
+    1.71
+   ],
+   "heard": "also bleibt wolf schlank aber wie schlank",
+   "sim": 1.0
+  },
+  {
+   "id": "t20",
+   "start": 3.01,
+   "end": 9.28,
+   "parts": [
+    0.0,
+    2.68
+   ],
+   "heard": "zwölf bis fünfzehn prozent körperfett faustregel aus dem kraftsport keine medizinische norm",
+   "sim": 1.0
+  },
+  {
+   "id": "t21",
+   "start": 9.63,
+   "end": 13.51,
+   "parts": [
+    0.0,
+    1.29,
+    2.39
+   ],
+   "heard": "unter acht prozent zu extrem die hormone können absacken",
+   "sim": 1.0
+  },
+  {
+   "id": "t22",
+   "start": 13.82,
+   "end": 19.57,
+   "parts": [
+    0.0,
+    1.55,
+    3.48
+   ],
+   "heard": "über zwanzig prozent dann kaloriendefizit dreihundert bis fünfhundert kcal am tag",
+   "sim": 0.96
+  }
+ ],
+ "score": 0.99,
+ "removed": [],
+ "dur": 19.6,
+ "take": 1
+}

@@ -1,0 +1,30 @@
+{
+ "lines": [
+  {
+   "id": "t14",
+   "start": 0.03,
+   "end": 3.07,
+   "parts": [
+    0.0,
+    2.39
+   ],
+   "heard": "done der heimliche saboteur körperfit",
+   "sim": 0.9
+  },
+  {
+   "id": "t15",
+   "start": 3.43,
+   "end": 6.42,
+   "parts": [
+    0.0,
+    1.93
+   ],
+   "heard": "fett ist nicht nusspeicher fett ist aktiv",
+   "sim": 0.97
+  }
+ ],
+ "score": 0.933,
+ "removed": [],
+ "dur": 6.48,
+ "take": 1
+}

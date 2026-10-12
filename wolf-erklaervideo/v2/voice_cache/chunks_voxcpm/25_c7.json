@@ -1,0 +1,42 @@
+{
+ "lines": [
+  {
+   "id": "c7",
+   "start": 0.03,
+   "end": 2.41,
+   "parts": [
+    0.0,
+    1.66
+   ],
+   "heard": "also schlaf schützen stress runter",
+   "sim": 1.0
+  },
+  {
+   "id": "c8",
+   "start": 2.79,
+   "end": 4.79,
+   "parts": [
+    0.0,
+    0.86
+   ],
+   "heard": "alkohol lässt er sowieso weg",
+   "sim": 1.0
+  },
+  {
+   "id": "c9",
+   "start": 5.15,
+   "end": 9.38,
+   "parts": [
+    0.0,
+    1.39,
+    3.13
+   ],
+   "heard": "kortisol sinkt und das testosteron darf wieder steigen",
+   "sim": 1.0
+  }
+ ],
+ "score": 1.0,
+ "removed": [],
+ "dur": 9.43,
+ "take": 1
+}
