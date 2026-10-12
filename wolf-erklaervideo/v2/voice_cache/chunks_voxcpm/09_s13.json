@@ -1,0 +1,30 @@
+{
+ "lines": [
+  {
+   "id": "s13",
+   "start": 0.03,
+   "end": 2.06,
+   "parts": [
+    0.0
+   ],
+   "heard": "tagsüber dann raus in die sonne",
+   "sim": 1.0
+  },
+  {
+   "id": "s14",
+   "start": 2.44,
+   "end": 6.03,
+   "parts": [
+    0.0,
+    1.4
+   ],
+   "heard": "gut für die innere uhr und mittags im sommer fürs vitamin d",
+   "sim": 1.0
+  }
+ ],
+ "score": 1.0,
+ "removed": [],
+ "dur": 6.09,
+ "take": 1,
+ "text": "Tagsüber dann: raus in die Sonne. Gut für die innere Uhr. Und mittags im Sommer fürs Vitamin D."
+}

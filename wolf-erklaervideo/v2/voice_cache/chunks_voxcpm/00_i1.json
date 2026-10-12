@@ -1,0 +1,63 @@
+{
+ "lines": [
+  {
+   "id": "i1",
+   "start": 0.03,
+   "end": 1.04,
+   "parts": [
+    0.0
+   ],
+   "heard": "wolf wacht auf",
+   "sim": 1.0
+  },
+  {
+   "id": "i2",
+   "start": 1.42,
+   "end": 2.61,
+   "parts": [
+    0.0
+   ],
+   "heard": "irgendwas stimmt nicht",
+   "sim": 1.0
+  },
+  {
+   "id": "i3",
+   "start": 2.84,
+   "end": 6.02,
+   "parts": [
+    0.0,
+    1.09,
+    2.21
+   ],
+   "heard": "kein feuer kein antrieb einfach nur platt",
+   "sim": 1.0
+  },
+  {
+   "id": "i4",
+   "start": 6.4,
+   "end": 7.85,
+   "parts": [
+    0.0
+   ],
+   "heard": "wolf schaut in den spiegel",
+   "sim": 1.0
+  },
+  {
+   "id": "i5",
+   "start": 8.23,
+   "end": 10.77,
+   "parts": [
+    0.0,
+    1.18,
+    2.21
+   ],
+   "heard": "gleicher wolf aber der akku lea",
+   "sim": 0.94
+  }
+ ],
+ "score": 0.989,
+ "removed": [],
+ "dur": 10.78,
+ "take": 1,
+ "text": "Wolf wacht auf. Irgendwas stimmt nicht. Kein Feuer. Kein Antrieb. Einfach nur platt. Wolf schaut in den Spiegel. Gleicher Wolf. Aber der Akku? Leer."
+}
