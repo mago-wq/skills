@@ -1,0 +1,38 @@
+{
+ "lines": [
+  {
+   "id": "t9",
+   "start": 0.03,
+   "end": 2.02,
+   "parts": [
+    0.0
+   ],
+   "heard": "zugegeben stark vereinfacht",
+   "sim": 1.0
+  },
+  {
+   "id": "t10",
+   "start": 2.4,
+   "end": 5.84,
+   "parts": [
+    0.0
+   ],
+   "heard": "aber schwere grundübungen heben das testosteron kurz an",
+   "sim": 1.0
+  },
+  {
+   "id": "t11",
+   "start": 6.22,
+   "end": 10.2,
+   "parts": [
+    0.0
+   ],
+   "heard": "langfristig wirkt training indirekt mehr muskeln weniger fett",
+   "sim": 1.0
+  }
+ ],
+ "score": 1.0,
+ "removed": [],
+ "dur": 10.22,
+ "take": 1
+}

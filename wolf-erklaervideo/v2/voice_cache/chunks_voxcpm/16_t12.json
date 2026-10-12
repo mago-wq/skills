@@ -1,0 +1,28 @@
+{
+ "lines": [
+  {
+   "id": "t12",
+   "start": 0.03,
+   "end": 4.63,
+   "parts": [
+    0.0
+   ],
+   "heard": "darum knie beugen kreuzheben rudern drückt klimbzüge",
+   "sim": 0.95
+  },
+  {
+   "id": "t13",
+   "start": 4.96,
+   "end": 7.04,
+   "parts": [
+    0.0
+   ],
+   "heard": "nicht eine stunde bezeps vom spiegel",
+   "sim": 0.95
+  }
+ ],
+ "score": 0.949,
+ "removed": [],
+ "dur": 7.1,
+ "take": 1
+}
