@@ -58,6 +58,18 @@ Hinweise:
   (Kniebeuge: Stange auf dem oberen Rücken; Kreuzheben: Stange vor den Oberschenkeln).
 - In jedem Bild bleibt eine Seite für Einblendungen frei („… kept free for text overlays“).
 
+## Auslieferung (immer so)
+
+Fertige Videos gehen **über GitHub** an den Nutzer, nicht als Datei-Anhang:
+
+1. Das Render-Ergebnis für GitHub neu kodieren, damit es unter 50 MB bleibt (GitHub warnt darüber, das Limit liegt bei 100 MB):
+   `ffmpeg -i render/<name>.mp4 -c:v libx264 -preset medium -crf 21 -tune animation -pix_fmt yuv420p -c:a copy -movflags +faststart <repo>/videos/<name>.mp4`
+   Ist es dann noch zu groß, CRF erhöhen (22–24).
+2. Im Repo-Root unter `videos/` auf dem aktuellen Arbeits-Branch committen und pushen.
+3. Dem Nutzer zwei Links schicken: die Ansicht
+   `https://github.com/<owner>/<repo>/blob/<branch>/videos/<name>.mp4` und den Direkt-Download
+   `https://github.com/<owner>/<repo>/raw/<branch>/videos/<name>.mp4`.
+
 ## v1 – reine SVG-Animation (augenloser Cartoon-Wolf)
 
 | Datei | Zweck |
