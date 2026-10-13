@@ -1,8 +1,0 @@
-{
-  "name": "wolf-erklaervideo",
-  "private": true,
-  "description": "SVG-Szenen per Chromium in Frames rendern (siehe ../SKILL.md)",
-  "dependencies": {
-    "playwright-core": "1.56.1"
-  }
-}
