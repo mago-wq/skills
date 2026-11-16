@@ -11,10 +11,16 @@ deshalb auf oberster Ebene.
 | `taste-skill`, `soft-skill`, `minimalist-skill`, `brutalist-skill`, `gpt-tasteskill`, `stitch-skill`, `redesign-skill`, `output-skill`, `brandkit`, `image-to-code-skill`, `imagegen-frontend-*`, `ui-ux-pro-max` | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | MIT |
 | `emil-design-eng`, `review-animations`, `improve-animations`, `find-animation-opportunities`, `animation-vocabulary`, `apple-design`, `pick-ui-library`, `prototype` | [emilkowalski/skills](https://github.com/emilkowalski/skills) | MIT |
 | `impeccable` | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | Apache-2.0 |
-| `design-council` | eigene Arbeit | — |
+| `design-council`, `web-erfahrung` | eigene Arbeit | — |
 | `scrapling-official` | [D4Vinci/Scrapling](https://github.com/D4Vinci/Scrapling) | BSD-3-Clause |
 
 Lizenztexte liegen in den `_*-meta/`-Ordnern.
+
+`web-erfahrung` sammelt Fallen aus tatsächlich gebauten Projekten — jeweils mit
+dem Symptom, an dem man sie erkennt. `references/` enthält ein ausgeführtes
+Referenzprojekt als Beispiel für den inneren Aufbau einer Seite. Der Council
+beantwortet, wie etwas aussehen soll; `web-erfahrung` beantwortet, woran es
+schon einmal gescheitert ist.
 
 `scrapling-official` ist der offizielle Web-Scraping-Skill von Scrapling und
 damit der einzige Nicht-Design-Skill hier — er hängt am selben Submodul-Mount,
