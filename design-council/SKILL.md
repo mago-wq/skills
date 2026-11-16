@@ -128,9 +128,18 @@ Design-Read. "Soft" und "Brutalist" gleichzeitig ist kein Kompromiss, sondern Ma
 
 ## Stufe 3 — Präzedenzfälle
 
-`ENTSCHEIDUNGEN.md` lesen, bevor eine strittige Frage neu aufgerollt wird. Auf
-**Geltungsbereich** achten: universelle Einträge gelten überall, projektgebundene nur im
-zugehörigen Profil.
+Zwei Dateien, bevor eine strittige Frage neu aufgerollt wird:
+
+1. **`ENTSCHEIDUNGEN-UNIVERSELL.md`** neben dieser Datei. Entscheidungen, die in einem
+   Projekt gefallen sind und überall gelten. Sie reisen mit dem Skill-Repo mit.
+2. **`ENTSCHEIDUNGEN.md`** im Projekt (`.claude/design-projekt/`). Dort steht, was nur
+   unter den Auflagen dieses Projekts gilt.
+
+Auf **Geltungsbereich** achten: eine Entscheidung, die unter dem Projektgesetz eines
+anderen Kunden gefallen ist, gilt hier nicht automatisch. Umgekehrt gehört eine
+universelle Entscheidung aus dem laufenden Projekt zurück in Datei 1, sonst wird sie im
+nächsten Projekt noch einmal diskutiert. Testfrage: *Würde ich das bei anderer Branche,
+Sprache und Zielgruppe genauso entscheiden?*
 
 ## Stufe 4 — Kontext-Ableitung
 
