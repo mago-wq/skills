@@ -1,0 +1,17 @@
+{
+  "description": "Design Council, Gedächtnis: prüft beim Beenden, ob die Arbeit dieser Sitzung in ENTSCHEIDUNGEN.md/CLAUDE.md gelandet ist, und blockt sonst genau einmal. Vorlage und Erläuterung in design-council/settings.hook.json.",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "D=\"${CLAUDE_PROJECT_DIR:-$PWD}\"; for P in \"$D/.claude/skills/design-council/scripts/wissen-hook.mjs\" \"$D/design-council/scripts/wissen-hook.mjs\"; do [ -f \"$P\" ] && exec node \"$P\"; done; exit 0",
+            "timeout": 10,
+            "statusMessage": "Wissen festhalten"
+          }
+        ]
+      }
+    ]
+  }
+}

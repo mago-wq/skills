@@ -1,0 +1,18 @@
+{
+  "description": "Design Council, Gedächtnis: prüft beim Beenden, ob die Arbeit dieser Sitzung in ENTSCHEIDUNGEN.md/CLAUDE.md gelandet ist, und blockt sonst genau einmal.",
+  "_hinweis": "Der Aufruf kennt beide Ablagen: '.claude/skills/design-council/' (vendort in ein Projekt) und 'design-council/' (dieses Skill-Repo selbst). Der erste Treffer gewinnt; findet er nichts, passiert nichts.",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "D=\"${CLAUDE_PROJECT_DIR:-$PWD}\"; for P in \"$D/.claude/skills/design-council/scripts/wissen-hook.mjs\" \"$D/design-council/scripts/wissen-hook.mjs\"; do [ -f \"$P\" ] && exec node \"$P\"; done; exit 0",
+            "timeout": 10,
+            "statusMessage": "Wissen festhalten"
+          }
+        ]
+      }
+    ]
+  }
+}
